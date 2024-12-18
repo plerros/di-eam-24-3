@@ -1,3 +1,3 @@
-# Temp Entry
+# Επικοινωνία Ανθρώπου-Μηχανής, Εργασία 3
 
-## File created in order for first Fork to be created
+Προσωπικά στοιχεία / id φοιτητών στο private.md
