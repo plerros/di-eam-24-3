@@ -5,6 +5,7 @@
 How to setup:
 ```
 git clone ...
+cd di-eam-24-3/ntantades
 yarnpkg install
 ```
 
