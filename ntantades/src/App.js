@@ -4,19 +4,19 @@ import { BrowserRouter, Routes, Route } from 'react-router';
 
 import Navbar from './components/Navbar/Navbar';
 
-import Home   from "./pages/Home";
-import Help   from "./pages/Help";
-import Login  from "./pages/Login";
-import Logout from "./pages/Logout";
+import Home        from "./pages/Home";
+import Search      from "./pages/Search";
+import BecomeNanny from "./pages/BecomeNanny";
+import Help        from "./pages/Help";
+import Login       from "./pages/Login";
+import Logout      from "./pages/Logout";
 
-import Family from "./pages/Family/Family";
 import FamilyAgreements from "./pages/Family/Agreements";
 import FamilyProfile    from "./pages/Family/Profile";
 import FamilyRendezvous from "./pages/Family/Rendezvous";
 import FamilyRequests   from "./pages/Family/Requests";
 import FamilySignUp     from "./pages/Family/SignUp";
 
-import Nanny from "./pages/Nanny/Info";
 import NannyAgreements from "./pages/Nanny/Agreements";
 import NannyOffers     from "./pages/Nanny/Offers";
 import NannyProfile    from "./pages/Nanny/Profile";
@@ -63,6 +63,8 @@ export default function App() {
       />
       <Routes>
         <Route index element={<Home />} />
+        <Route path="search" element={<Search />} />
+        <Route path="becomenanny" element={<BecomeNanny />} />
         <Route path="help" element={<Help />} />
 
         {/* write login / logout system */}
@@ -82,19 +84,17 @@ export default function App() {
         } />
 
         <Route path="family">
-          <Route index element = {<Family />} />
+          <Route index element = {<FamilyProfile />} />
           <Route path="agreements" element={<FamilyAgreements />} />
-          <Route path="profile"    element={<FamilyProfile />} />
           <Route path="rendezvous" element={<FamilyRendezvous />} />
           <Route path="requests"   element={<FamilyRequests />} />
           <Route path="signup"     element={<FamilySignUp />} />
         </Route>
 
         <Route path="nanny">
-          <Route index element = {<Nanny />} />
+          <Route index element = {<NannyProfile />} />
           <Route path="agreements" element={<NannyAgreements />} />
           <Route path="offers"     element={<NannyOffers />} />
-          <Route path="profile"    element={<NannyProfile />} />
           <Route path="rendezvous" element={<NannyRendezvous />} />
           <Route path="requests"   element={<NannyRequests />} />
           <Route path="signup"     element={<NannySignUp />} />

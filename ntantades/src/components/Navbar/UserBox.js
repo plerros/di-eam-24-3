@@ -7,37 +7,20 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-
 import {Link} from 'react-router-dom'
+
+import layout from "../../pages/layout.json"
 
 function UserDropdown(role) {
   if (role === "Nanny") {
     return (
       [
-        {
-          text: 'Προφίλ',
-          route: "nanny/profile"
-        },
-        {
-          text: 'Αγγελίες',
-          route: "nanny/offers"
-        },
-        {
-          text: 'Αιτήσεις',
-          route: "nanny/requests"
-        },
-        {
-          text: 'Ραντεβού',
-          route: "nanny/rendezvous"
-        },
-        {
-          text: 'Συμφωνητικά',
-          route: "nanny/agreements"
-        },
-        {
-          text: 'Αποσύνδεση',
-          route: "logout"
-        },
+        layout["/nanny"],
+        layout["/nanny/offers"],
+        layout["/nanny/requests"],
+        layout["/nanny/rendezvous"],
+        layout["/nanny/agreements"],
+        layout["/logout"]
       ]
     );
   }
@@ -45,26 +28,11 @@ function UserDropdown(role) {
   if (role === "Family") {
     return (
       [
-        {
-          text: 'Προφίλ',
-          route: "family/profile"
-        },
-        {
-          text: 'Αιτήσεις',
-          route: "family/requests"
-        },
-        {
-          text: 'Ραντεβού',
-          route: "family/rendezvous"
-        },
-        {
-          text: 'Συμφωνητικά',
-          route: "family/agreements"
-        },
-        {
-          text: 'Αποσύνδεση',
-          route: "logout"
-        }
+        layout["/family"],
+        layout["/family/requests"],
+        layout["/family/rendezvous"],
+        layout["/family/agreements"],
+        layout["/logout"]
       ]
     );
   }
@@ -129,9 +97,9 @@ export default function UserBox({user, role}) {
         onClick={handleCloseUserMenu}
         sx={{ my: 2, color: 'white', display: 'block' }}
         component={Link}
-        to="login"
+        to={layout["/login"].route}
       >
-        {"ΕΙΣΟΔΟΣ"}
+        {layout["/login"].title}
       </Button>
     </Box>
   );

@@ -9,32 +9,26 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-
 import {Link} from 'react-router-dom';
 
 import UserBox from "./UserBox";
 
-function MenuPages(role) {
-  const pageBecomeNanny = {
-    text: 'ΓΙΝΕ ΝΤΑΝΤΑ',
-    route: "nanny"
-  }
-  const pageHelp = {
-    text: 'ΒΟΗΘΕΙΑ',
-    route: "help"
-  }
+import layout from "../../pages/layout.json"
 
+function MenuPages(role) {
   if (role === "Nanny" || role === "Family") {
     return (
       [
-        pageHelp,
+        layout["/search"],
+        layout["/help"],
       ]
     );
   }
   return (
     [
-      pageBecomeNanny,
-      pageHelp,
+      layout["/search"],
+      layout["/becomenanny"],
+      layout["/help"],
     ]
   );
 }
@@ -105,12 +99,12 @@ export default function Navbar({user, role}) {
             >
               {pages.map((page) => (
                 <MenuItem
-                  key={page.text}
+                  key={page.title}
                   onClick={handleCloseNavMenu}
                   component={Link}
                   to={page.route}
                 >
-                  <Typography sx={{ textAlign: 'center' }}>{page.text}</Typography>
+                  <Typography sx={{ textAlign: 'center' }}>{page.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -140,13 +134,13 @@ export default function Navbar({user, role}) {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page.text}
+                key={page.title}
                 onClick={handleCloseNavMenu}
                 sx={{ mx: 2, my: 2, color: 'white', display: 'block' }}
                 component={Link}
                 to={page.route}
               >
-                {page.text}
+                {page.title}
               </Button>
             ))}
           </Box>
