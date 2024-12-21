@@ -3,6 +3,7 @@ import * as React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router';
 
 import Navbar from './components/Navbar/Navbar';
+import Breadcrumb from './components/Breadcrumb';
 
 import Home        from "./pages/Home";
 import Search      from "./pages/Search";
@@ -61,6 +62,7 @@ export default function App() {
         user={users[0]}
         role={role}
       />
+      <Breadcrumb/>
       <Routes>
         <Route index element={<Home />} />
         <Route path="search" element={<Search />} />
