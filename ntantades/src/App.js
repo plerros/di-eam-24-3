@@ -1,7 +1,8 @@
 import './App.css';
 import * as React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router';
 
+import getUser from './components/getUser';
 import Navbar from './components/Navbar/Navbar';
 import Breadcrumb from './components/Breadcrumb';
 
@@ -26,41 +27,34 @@ import NannyRequests   from "./pages/Nanny/Requests";
 import NannySignUp     from "./pages/Nanny/SignUp";
 
 import RoleSwitch from "./pages/Internal/RoleSwitch";
+import Playground from './pages/Internal/Playground';
 
 import NoPage from "./pages/NoPage";
 
-const users = [
-  {
-    id: 1,
-    type: "Nanny",
-    firstName: "Benjamin",
-    lastName: "Thool",
-    picture: "/static/images/avatar/2.jpg"
-  }
-];
+//import Database from "./data.json";
+
+const PrivateFamily = ({uid}) => {
+  const user = getUser(uid);
+  return (user.role === "Family") ? <Outlet /> : <Navigate to="/nopage" />;
+}
+
+const PrivateNanny = ({uid}) => {
+  const user = getUser(uid);
+  return (user.role === "Nanny") ? <Outlet /> : <Navigate to="/nopage" />;
+}
 
 export default function App() {
-  const storedRole = localStorage.getItem('role');
-  const [role, setRole] = React.useState(storedRole);
-
-  const handleRoleNanny = () => {
-    setRole("Nanny");
-    localStorage.setItem('role', "Nanny")
-  }
-  const handleRoleFamily = () => {
-    setRole("Family");
-    localStorage.setItem('role', "Family")
-  }
-  const handleRoleNone = () => {
-    setRole();
-    localStorage.removeItem('role')
+  const storedUID = parseInt(localStorage.getItem('uid'));
+  const [uid, setUID] = React.useState(storedUID);
+  const handleUID = (uid) => {
+    setUID(uid);
+    localStorage.setItem('uid', uid);
   }
 
   return (
     <BrowserRouter>
       <Navbar
-        user={users[0]}
-        role={role}
+        uid={uid}
       />
       <Breadcrumb/>
       <Routes>
@@ -71,44 +65,34 @@ export default function App() {
 
         {/* write login / logout system */}
         <Route path="login" element={
-          <Login
-            handleRoleNanny={handleRoleNanny}
-            handleRoleFamily={handleRoleFamily}
-            handleRoleNone={handleRoleNone}
-          />
+          <Login handleUID={handleUID} />
         } />
         <Route path="logout" element={
-          <Logout
-            handleRoleNanny={handleRoleNanny}
-            handleRoleFamily={handleRoleFamily}
-            handleRoleNone={handleRoleNone}
-          />
+          <Logout handleUID={handleUID} />
         } />
 
-        <Route path="family">
+        <Route path="family/signup" element={<FamilySignUp />} />
+        <Route path="nanny/signup"  element={<NannySignUp />} />
+
+        <Route path="family" element={<PrivateFamily uid={uid}/>}>
           <Route index element = {<FamilyProfile />} />
           <Route path="agreements" element={<FamilyAgreements />} />
           <Route path="rendezvous" element={<FamilyRendezvous />} />
           <Route path="requests"   element={<FamilyRequests />} />
-          <Route path="signup"     element={<FamilySignUp />} />
         </Route>
 
-        <Route path="nanny">
+        <Route path="nanny" element={<PrivateNanny uid={uid} />}>
           <Route index element = {<NannyProfile />} />
           <Route path="agreements" element={<NannyAgreements />} />
           <Route path="offers"     element={<NannyOffers />} />
           <Route path="rendezvous" element={<NannyRendezvous />} />
           <Route path="requests"   element={<NannyRequests />} />
-          <Route path="signup"     element={<NannySignUp />} />
         </Route>
 
         <Route path="internal">
+          <Route path="playground" element={<Playground />}/>
           <Route path="roleSwitch" element={
-            <RoleSwitch
-              handleRoleNanny={handleRoleNanny}
-              handleRoleFamily={handleRoleFamily}
-              handleRoleNone={handleRoleNone}
-            />
+            <RoleSwitch handleUID={handleUID} />
           } />
         </Route>
 
