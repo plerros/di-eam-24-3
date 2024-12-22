@@ -59,7 +59,7 @@ export default function UserBox({uid}) {
   if (user.role === "Nanny" || user.role === "Family") {
     return (
       <Box sx={{ flexGrow: 0 }}>
-      <Tooltip title="Open settings">
+      <Tooltip title="Επιλογές">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar alt={user.firstName} src={user.picture} />
         </IconButton>
@@ -98,7 +98,7 @@ export default function UserBox({uid}) {
     <Box sx={{ flexGrow: 0 }}>
       <Button
         onClick={handleCloseUserMenu}
-        sx={{ my: 2, color: 'white', display: 'block' }}
+        sx={{ color: 'white', display: 'block' }}
         component={Link}
         to={layout["/login"].route}
       >
