@@ -19,8 +19,8 @@ function UserDropdown(role) {
       [
         layout["/nanny"],
         layout["/nanny/offers"],
-        layout["/nanny/requests"],
         layout["/nanny/rendezvous"],
+        layout["/nanny/requests"],
         layout["/nanny/agreements"],
         layout["/logout"]
       ]
@@ -31,8 +31,8 @@ function UserDropdown(role) {
     return (
       [
         layout["/family"],
-        layout["/family/requests"],
         layout["/family/rendezvous"],
+        layout["/family/requests"],
         layout["/family/agreements"],
         layout["/logout"]
       ]

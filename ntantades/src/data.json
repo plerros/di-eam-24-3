@@ -39,14 +39,26 @@
   ],
   "offers" : [
     {
+      "id"             : 0,
+      "uidNanny"       : 0,
+      "published"      : "1970-01-01T00:00:00+00:00",
+      "type"           : "",
+      "availableDays"  : [],
+      "availableHours" : [],
+      "rendevousDays"  : [],
+      "rendevousHours" : [],
+      "requestID"      : 0
+    },
+    {
       "id"             : 1,
       "uidNanny"       : 1,
       "published"      : "2024-03-12T13:37:27+00:00",
       "type"           : "FullTime",
       "availableDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT"],
-      "availableHours" : ["2000-00-00T09:00:00+00:00", "2000-00-00T17:00:00+00:00"],
+      "availableHours" : ["1970-01-01T09:00:00+00:00", "1970-01-01T17:00:00+00:00"],
       "rendevousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
-      "rendevousHours" : ["2000-00-00T09:00:00+00:00", "2000-00-00T17:00:00+00:00"]
+      "rendevousHours" : ["1970-01-01T09:00:00+00:00", "1970-01-01T17:00:00+00:00"],
+      "requestID"      : 1
     },
     {
       "id"             : 2,
@@ -54,33 +66,79 @@
       "published"      : "2024-10-12T11:22:44+00:00",
       "type"           : "FullTime",
       "availableDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT"],
-      "availableHours" : ["2000-00-00T09:00:00+00:00", "2000-00-00T17:00:00+00:00"],
+      "availableHours" : ["1970-01-01T09:00:00+00:00", "1970-01-01T17:00:00+00:00"],
       "rendevousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
-      "rendevousHours" : ["2000-00-00T09:00:00+00:00", "2000-00-00T17:00:00+00:00"]
+      "rendevousHours" : ["1970-01-01T09:00:00+00:00", "1970-01-01T17:00:00+00:00"],
+      "requestID"      : 2
     }
   ],
   "rendezvous" : [
     {
       "id"        : 1,
       "uidFamily" : 2,
-      "uidNanny"  : 1,
+      "offerID"   : 1,
       "scheduled" : "2024-04-01T10:00:00+00:00"
     },
     {
-      "id"        : 3,
+      "id"        : 2,
       "uidFamily" : 3,
-      "uidNanny"  : 1,
+      "offerID"   : 2,
       "scheduled" : "2025-01-10T10:00:00+00:00"
+    }
+  ],
+  "requests" : [
+    {
+      "id"          : 0,
+      "uidFamily"   : 0,
+      "offerID"     : 0,
+      "agreedDays"  : [],
+      "agreedHours" : []
+    },
+    {
+      "id"          : 1,
+      "uidFamily"   : 2,
+      "offerID"     : 1,
+      "agreedDays"  : ["MON", "TUE", "WED", "THU", "FRI"],
+      "agreedHours" : ["1970-01-01T09:00:00+00:00", "1970-01-01T17:00:00+00:00"]
+    },
+    {
+      "id"        : 2,
+      "uidFamily" : 3,
+      "offerID"   : 2,
+      "agreedDays"  : ["MON", "TUE", "WED", "THU", "FRI"],
+      "agreedHours" : ["1970-01-01T09:00:00+00:00", "1970-01-01T17:00:00+00:00"]
+    }
+  ],
+  "agreements" : [
+    {
+      "id"        : 1,
+      "requestID" : 1,
+      "begin"     : "2024-05-01T00:00:00+00:00",
+      "end"       : "2024-05-31T00:00:00+00:00",
+      "accepted"  : true
+    },
+    {
+      "id"        : 2,
+      "requestID" : 1,
+      "begin"     : "2024-06-01T00:00:00+00:00",
+      "end"       : "2024-06-30T00:00:00+00:00",
+      "accepted"  : true
+    },
+    {
+      "id"        : 3,
+      "requestID" : 2,
+      "begin"     : "2025-02-01T00:00:00+00:00",
+      "end"       : "2024-02-28T00:00:00+00:00",
+      "accepted"  : true
     }
   ],
   "reviews" : [
     {
-      "id"        : 1,
-      "uidFamily" : 2,
-      "uidNanny"  : 1,
-      "stars"     : 4.5,
-      "title"     : "Καταπλήκτικός!!",
-      "text"      : "Ο κύριος thool ήταν πολύ καλός με το μωράκι μου. Πολύ προσεκτικός."
+      "id"          : 1,
+      "agreementID" : 1,
+      "stars"       : 4.5,
+      "title"       : "Καταπλήκτικός!!",
+      "text"        : "Ο κύριος thool ήταν πολύ καλός με το μωράκι μου. Πολύ προσεκτικός."
     }
   ]
 }
