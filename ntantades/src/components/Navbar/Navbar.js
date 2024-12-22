@@ -11,9 +11,11 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import {Link} from 'react-router-dom';
 
+import getUser from "../getUser";
 import UserBox from "./UserBox";
 
-import layout from "../../pages/layout.json"
+// data
+import layout from "../../pages/layout.json";
 
 function MenuPages(role) {
   if (role === "Nanny" || role === "Family") {
@@ -33,7 +35,7 @@ function MenuPages(role) {
   );
 }
 
-export default function Navbar({user, role}) {
+export default function Navbar({uid}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -44,7 +46,8 @@ export default function Navbar({user, role}) {
     setAnchorElNav(null);
   };
 
-  const pages = MenuPages(role);
+  const user = getUser(uid)
+  const pages = MenuPages(user.role);
 
   return (
     <nav>
@@ -150,8 +153,7 @@ export default function Navbar({user, role}) {
 
           {/* user */}
           <UserBox
-            user={user}
-            role={role}
+            uid={uid}
           />
         </Toolbar>
       </Container>

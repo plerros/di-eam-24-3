@@ -9,6 +9,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import {Link} from 'react-router-dom'
 
+import getUser from '../getUser';
+
 import layout from "../../pages/layout.json"
 
 function UserDropdown(role) {
@@ -17,8 +19,8 @@ function UserDropdown(role) {
       [
         layout["/nanny"],
         layout["/nanny/offers"],
-        layout["/nanny/requests"],
         layout["/nanny/rendezvous"],
+        layout["/nanny/requests"],
         layout["/nanny/agreements"],
         layout["/logout"]
       ]
@@ -29,8 +31,8 @@ function UserDropdown(role) {
     return (
       [
         layout["/family"],
-        layout["/family/requests"],
         layout["/family/rendezvous"],
+        layout["/family/requests"],
         layout["/family/agreements"],
         layout["/logout"]
       ]
@@ -41,7 +43,7 @@ function UserDropdown(role) {
   );
 }
 
-export default function UserBox({user, role}) {
+export default function UserBox({uid}) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -51,9 +53,10 @@ export default function UserBox({user, role}) {
     setAnchorElUser(null);
   };
 
-  const settings = UserDropdown(role);
+  const user = getUser(uid);
+  const settings = UserDropdown(user.role);
 
-  if (role === "Nanny" || role === "Family") {
+  if (user.role === "Nanny" || user.role === "Family") {
     return (
       <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
