@@ -1,7 +1,8 @@
-export default function Logout() {
+import { Navigate } from "react-router-dom";
+
+export default function Logout({handleUID}) {
+  handleUID(0);
   return (
-      <div>
-        <h1>This is the Logout page</h1>
-      </div>
+      <Navigate to="/" />
     );
   }
