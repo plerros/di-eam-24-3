@@ -55,9 +55,9 @@
       "published"      : "2024-03-12T13:37:27+00:00",
       "type"           : "FullTime",
       "availableDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT"],
-      "availableHours" : ["1970-01-01T09:00:00+00:00", "1970-01-01T17:00:00+00:00"],
+      "availableHours" : [9, 17],
       "rendevousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
-      "rendevousHours" : ["1970-01-01T09:00:00+00:00", "1970-01-01T17:00:00+00:00"],
+      "rendevousHours" : [9, 17],
       "requestID"      : 1
     },
     {
@@ -66,9 +66,9 @@
       "published"      : "2024-10-12T11:22:44+00:00",
       "type"           : "FullTime",
       "availableDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT"],
-      "availableHours" : ["1970-01-01T09:00:00+00:00", "1970-01-01T17:00:00+00:00"],
+      "availableHours" : [9, 17],
       "rendevousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
-      "rendevousHours" : ["1970-01-01T09:00:00+00:00", "1970-01-01T17:00:00+00:00"],
+      "rendevousHours" : [9, 17],
       "requestID"      : 2
     }
   ],
@@ -99,14 +99,14 @@
       "uidFamily"   : 2,
       "offerID"     : 1,
       "agreedDays"  : ["MON", "TUE", "WED", "THU", "FRI"],
-      "agreedHours" : ["1970-01-01T09:00:00+00:00", "1970-01-01T17:00:00+00:00"]
+      "agreedHours" : [9, 17]
     },
     {
       "id"        : 2,
       "uidFamily" : 3,
       "offerID"   : 2,
       "agreedDays"  : ["MON", "TUE", "WED", "THU", "FRI"],
-      "agreedHours" : ["1970-01-01T09:00:00+00:00", "1970-01-01T17:00:00+00:00"]
+      "agreedHours" : [9, 17]
     }
   ],
   "agreements" : [
