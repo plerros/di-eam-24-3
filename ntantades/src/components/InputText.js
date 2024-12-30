@@ -23,7 +23,7 @@ export default function InputText({label, required, value, setValue, issue}) {
       setLocalIssue(errorEmptyField)
     else
       setLocalIssue(issue)
-  }, [interacted, setLocalIssue, value, issue]);
+  }, [interacted, setLocalIssue, value, issue, required]);
 
   return (
     <TextField
