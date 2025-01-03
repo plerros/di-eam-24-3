@@ -28,7 +28,7 @@
     "route"     : "/help"
   },
   "/login" : {
-    "text"      : "Είσδος",
+    "text"      : "Είσοδος",
     "title"     : "ΕΙΣΟΔΟΣ",
     "jspath"    : "pages/Login",
     "component" : "Login",

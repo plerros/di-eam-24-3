@@ -65,7 +65,7 @@ export default function App() {
 
         {/* write login / logout system */}
         <Route path="login" element={
-          <Login handleUID={handleUID} />
+          <Login uid = {uid} handleUID={handleUID} />
         } />
         <Route path="logout" element={
           <Logout handleUID={handleUID} />
