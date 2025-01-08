@@ -19,8 +19,11 @@ const initialState = {
   password          : "",
   passwordIssue     : issueNone,
 
-  name              : localStorage.getItem('signupName'),
-  nameIssue         : issueNone,
+  firstName         : localStorage.getItem('signupfirstName'),
+  firstNameIssue    : issueNone,
+
+  lastName         : localStorage.getItem('signuplastName'),
+  lastNameIssue    : issueNone,
 
   age               : localStorage.getItem('signupAge'),
   ageIssue          : issueNone,
@@ -58,10 +61,16 @@ function reducer(state, action) {
         password: action.nextPassword
       }
     }
-    case 'changed_name': {
+    case 'changed_firstName': {
       return {
         ...state,
-        name: action.nextName
+        firstName: action.nextFirstName
+      }
+    }
+    case 'changed_lastName': {
+      return {
+        ...state,
+        lastName: action.nextLastName
       }
     }
     case 'changed_age': {
@@ -120,7 +129,8 @@ function reducer(state, action) {
         }
         case 2: {
           if (
-            (state.name === "")
+            (state.firstName === "")
+            || (state.lastName === "")
             || (state.age === "")
             || (state.gender === "")
             || (state.phone === "")
@@ -130,7 +140,8 @@ function reducer(state, action) {
           ) {
             return {
               ...state,
-              nameIssue: (state.name === "") ? issueRequired : issueNone,
+              firstNameIssue: (state.name === "") ? issueRequired : issueNone,
+              lastNameIssue: (state.name === "") ? issueRequired : issueNone,
               ageIssue: (state.age === "") ? issueRequired : issueNone,
               genderIssue: (state.gender === "") ? issueRequired : issueNone,
               phoneIssue: (state.phone === "") ? issueRequired : issueNone,
@@ -169,10 +180,16 @@ function formInputs(state, dispatch) {
     })
   }
 
-  const handleName = (value) => {
+  const handleFirstName = (value) => {
     dispatch({
-      type: 'changed_name',
-      nextName: value
+      type: 'changed_firstName',
+      nextFirstName: value
+    })
+  }
+  const handleLastName = (value) => {
+    dispatch({
+      type: 'changed_lastName',
+      nextLastName: value
     })
   }
 
@@ -262,9 +279,16 @@ function formInputs(state, dispatch) {
         <InputText
           label={"Όνομα"}
           required={true}
-          value={state.name}
-          setValue={handleName}
-          issue={state.nameIssue}
+          value={state.firstName}
+          setValue={handleFirstName}
+          issue={state.firstNameIssue}
+        />
+        <InputText
+          label={"Επίθετο"}
+          required={true}
+          value={state.lastName}
+          setValue={handleLastName}
+          issue={state.lastNameIssue}
         />
         <InputText
           label={"Ηλικία"}

@@ -12,7 +12,8 @@
       "address"      : "",
       "municipality" : "",
       "postalCode"   : "",
-      "role"         : ""
+      "role"         : "",
+      "picture"       : ""
     },
     {
       "userID"       : 1,
@@ -26,7 +27,8 @@
       "address"      : "Μαρμάρου 12",
       "municipality" : "Δήμος Σερβίων",
       "postalCode"   : "12345",
-      "role"         : "Nanny"
+      "role"         : "Nanny",
+      "picture"      : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Tunnel_View%2C_Yosemite_Valley%2C_Yosemite_NP_-_Diliff.jpg/320px-Tunnel_View%2C_Yosemite_Valley%2C_Yosemite_NP_-_Diliff.jpg"
     },
     {
       "userID"       : 2,
@@ -40,7 +42,8 @@
       "address"      : "Οψιδιανού 21",
       "municipality" : "Δήμος Κιλελέρ",
       "postalCode"   : "54321",
-      "role"         : "Family"
+      "role"         : "Family",
+      "picture"      : "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Bergstj%C3%A4rnsk%C3%A5tan_-_setting.jpg/320px-Bergstj%C3%A4rnsk%C3%A5tan_-_setting.jpg"
     },
     {
       "userID"       : 3,
@@ -54,7 +57,8 @@
       "address"      : "Οψιδιανού 21",
       "municipality" : "Δήμος Κιλελέρ",
       "postalCode"   : "54321",
-      "role"         : "Family"
+      "role"         : "Family",
+      "picture"      : "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/%C2%ABWinter_cat%C2%BB_%283160810976%29_%28cropped%29.jpg/473px-%C2%ABWinter_cat%C2%BB_%283160810976%29_%28cropped%29.jpg"
     }
   ],
   "offers" : [
