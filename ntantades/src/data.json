@@ -1,40 +1,60 @@
 {
   "users" : [
     {
-      "userID"   : 0,
-      "email"    : "",
-      "password" : "",
-      "fistName" : "",
-      "lastName" : "",
-      "age"      : 0,
-      "role"     : ""
+      "userID"       : 0,
+      "email"        : "",
+      "password"     : "",
+      "fistName"     : "",
+      "lastName"     : "",
+      "age"          : 0,
+      "gender"       : "",
+      "phone"        : "",
+      "address"      : "",
+      "municipality" : "",
+      "postalCode"   : "",
+      "role"         : ""
     },
     {
-      "userID"   : 1,
-      "email"    : "benjaminthool@gmail.com",
-      "password" : "123",
-      "fistName" : "Benjamin",
-      "lastName" : "Thool",
-      "age"      : 33,
-      "role"     : "Nanny"
+      "userID"       : 1,
+      "email"        : "benjaminthool@gmail.com",
+      "password"     : "123",
+      "fistName"     : "Benjamin",
+      "lastName"     : "Thool",
+      "age"          : 33,
+      "gender"       : "Άνδρας",
+      "phone"        : "1234567890",
+      "address"      : "Μαρμάρου 12",
+      "municipality" : "Δήμος Σερβίων",
+      "postalCode"   : "12345",
+      "role"         : "Nanny"
     },
     {
-      "userID"   : 2,
-      "email"    : "mariakokkinou@gmail.com",
-      "password" : "123",
-      "fistName" : "Μαρία",
-      "lastName" : "Κοκκίνου",
-      "age"      : 28,
-      "role"     : "Family"
+      "userID"       : 2,
+      "email"        : "mariakokkinou@gmail.com",
+      "password"     : "123",
+      "fistName"     : "Μαρία",
+      "lastName"     : "Κοκκίνου",
+      "age"          : 28,
+      "gender"       : "Γυναίκα",
+      "phone"        : "1234567890",
+      "address"      : "Οψιδιανού 21",
+      "municipality" : "Δήμος Κιλελέρ",
+      "postalCode"   : "54321",
+      "role"         : "Family"
     },
     {
-      "userID"   : 3,
-      "email"    : "mariample@gmail.com",
-      "password" : "123",
-      "fistName" : "Μαρία",
-      "lastName" : "Μπλέ",
-      "age"      : 31,
-      "role"     : "Family"
+      "userID"       : 3,
+      "email"        : "mariample@gmail.com",
+      "password"     : "123",
+      "fistName"     : "Μαρία",
+      "lastName"     : "Μπλέ",
+      "age"          : 31,
+      "gender"       : "Γυναίκα",
+      "phone"        : "1234567890",
+      "address"      : "Οψιδιανού 21",
+      "municipality" : "Δήμος Κιλελέρ",
+      "postalCode"   : "54321",
+      "role"         : "Family"
     }
   ],
   "offers" : [

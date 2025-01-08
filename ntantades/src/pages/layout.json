@@ -68,10 +68,10 @@
     "route"     : "/family/requests"
   },
   "/family/signup" : {
-    "text"      : "Εγγραφή",
+    "text"      : "Εγγραφή Οικογένειας",
     "jspath"    : "/family/SignUp",
     "component" : "FamilySignUp",
-    "route"     : "/family/signup"
+    "route"     : "/familysignup"
   },
 
   
@@ -105,10 +105,10 @@
     "component" : "NannyRequests",
     "route"     : "/nanny/requests"
   },
-  "/nanny/signup" : {
-    "text"      : "Εγγραφή",
-    "jspath"    : "/nanny/SignUp",
+  "/nannysignup" : {
+    "text"      : "Εγγραφή Νταντάς",
+    "jspath"    : "/Nanny/SignUp",
     "component" : "NannySignUp",
-    "route"     : "/nanny/signup"
+    "route"     : "/nannysignup"
   }
 }
