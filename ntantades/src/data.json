@@ -59,6 +59,21 @@
       "postalCode"   : "54321",
       "role"         : "Family",
       "picture"      : "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/%C2%ABWinter_cat%C2%BB_%283160810976%29_%28cropped%29.jpg/473px-%C2%ABWinter_cat%C2%BB_%283160810976%29_%28cropped%29.jpg"
+    },
+    {
+      "userID"       : 4,
+      "email"        : "rozabambinou@gmail.com",
+      "password"     : "123",
+      "firstName"    : "Ρόζα",
+      "lastName"     : "Μπαμπίνου",
+      "age"          : 25,
+      "gender"       : "Γυναίκα",
+      "phone"        : "1234567890",
+      "address"      : "Βελανιδιάς 19",
+      "municipality" : "Δήμος Αθηναίων",
+      "postalCode"   : "12345",
+      "role"         : "Nanny",
+      "picture"      : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Collared_lory_%28Vini_solitaria%29_on_octopus_tree_%28Heptapleurum_actinophyllum%29_Colo-I-Suva.jpg/360px-Collared_lory_%28Vini_solitaria%29_on_octopus_tree_%28Heptapleurum_actinophyllum%29_Colo-I-Suva.jpg"
     }
   ],
   "offers" : [
@@ -94,6 +109,17 @@
       "rendevousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
       "rendevousHours" : [9, 17],
       "requestID"      : 2
+    },
+    {
+      "id"             : 3,
+      "uidNanny"       : 4,
+      "published"      : "2025-01-09T22:22:11+00:00",
+      "type"           : "FullTime",
+      "availableDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", ""],
+      "availableHours" : [9, 17],
+      "rendevousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
+      "rendevousHours" : [9, 17],
+      "requestID"      : 0
     }
   ],
   "rendezvous" : [
