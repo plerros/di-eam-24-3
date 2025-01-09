@@ -71,8 +71,8 @@ export default function App() {
           <Logout handleUID={handleUID} />
         } />
 
-        <Route path="family/signup" element={<FamilySignUp />} />
-        <Route path="nanny/signup"  element={<NannySignUp />} />
+        <Route path="familysignup" element={<FamilySignUp />} />
+        <Route path="nannysignup"  element={<NannySignUp />} />
 
         <Route path="family" element={<PrivateFamily uid={uid}/>}>
           <Route index element = {<FamilyProfile />} />
