@@ -90,7 +90,7 @@ export default function App() {
         </Route>
 
         <Route path="internal">
-          <Route path="playground" element={<Playground />}/>
+          <Route path="playground" element={<Playground uid={uid} />}/>
           <Route path="roleSwitch" element={
             <RoleSwitch handleUID={handleUID} />
           } />
