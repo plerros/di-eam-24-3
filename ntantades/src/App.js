@@ -12,6 +12,8 @@ import BecomeNanny from "./pages/BecomeNanny";
 import Help        from "./pages/Help";
 import Login       from "./pages/Login";
 import Logout      from "./pages/Logout";
+import Users        from "./pages/Users";
+import Reviews     from "./pages/Reviews";
 
 import FamilyAgreements from "./pages/Family/Agreements";
 import FamilyProfile    from "./pages/Family/Profile";
@@ -74,15 +76,18 @@ export default function App() {
         <Route path="familysignup" element={<FamilySignUp />} />
         <Route path="nannysignup"  element={<NannySignUp />} />
 
+        <Route path="users/:url_uid" element={<Users uid={uid} />}/>
+        <Route path="users/:url_uid/reviews" element={<Reviews uid={uid}/>}/>
+
         <Route path="family" element={<PrivateFamily uid={uid}/>}>
-          <Route index element = {<FamilyProfile />} />
+          <Route index element = {<FamilyProfile uid={uid} />} />
           <Route path="agreements" element={<FamilyAgreements />} />
           <Route path="rendezvous" element={<FamilyRendezvous />} />
           <Route path="requests"   element={<FamilyRequests />} />
         </Route>
 
         <Route path="nanny" element={<PrivateNanny uid={uid} />}>
-          <Route index element = {<NannyProfile />} />
+          <Route index element = {<NannyProfile uid={uid} />} />
           <Route path="agreements" element={<NannyAgreements />} />
           <Route path="offers"     element={<NannyOffers />} />
           <Route path="rendezvous" element={<NannyRendezvous />} />

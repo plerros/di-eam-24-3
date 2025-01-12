@@ -28,7 +28,8 @@
       "municipality" : "Δήμος Σερβίων",
       "postalCode"   : "12345",
       "role"         : "Nanny",
-      "picture"      : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Tunnel_View%2C_Yosemite_Valley%2C_Yosemite_NP_-_Diliff.jpg/320px-Tunnel_View%2C_Yosemite_Valley%2C_Yosemite_NP_-_Diliff.jpg"
+      "picture"      : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Tunnel_View%2C_Yosemite_Valley%2C_Yosemite_NP_-_Diliff.jpg/320px-Tunnel_View%2C_Yosemite_Valley%2C_Yosemite_NP_-_Diliff.jpg",
+      "description"  : "Γειά σας, με λένε Benjamin Thool. Το ζώδιο μου είναι κριός και έχω μάτι για λεπτομέρεια. Είμαι μεθοδικός, προσεκτικός και υπομονετικός. Είμαι απο βρετανία, έχω παντρευτεί και τώρα μαθάινω κέντημα."
     },
     {
       "userID"       : 2,
@@ -114,6 +115,17 @@
       "id"             : 3,
       "uidNanny"       : 4,
       "published"      : "2025-01-09T22:22:11+00:00",
+      "type"           : "FullTime",
+      "availableDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", ""],
+      "availableHours" : [9, 17],
+      "rendevousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
+      "rendevousHours" : [9, 17],
+      "requestID"      : 0
+    },
+    {
+      "id"             : 4,
+      "uidNanny"       : 1,
+      "published"      : "2025-01-12T16:00:00+00:00",
       "type"           : "FullTime",
       "availableDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", ""],
       "availableHours" : [9, 17],

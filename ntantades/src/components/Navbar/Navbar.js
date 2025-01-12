@@ -21,16 +21,16 @@ function MenuPages(role) {
   if (role === "Nanny" || role === "Family") {
     return (
       [
-        layout["/search"],
-        layout["/help"],
+        layout.filter(item => item.route === "/search")[0],
+        layout.filter(item => item.route === "/help")[0]
       ]
     );
   }
   return (
     [
-      layout["/search"],
-      layout["/becomenanny"],
-      layout["/help"],
+      layout.filter(item => item.route === "/search")[0],
+      layout.filter(item => item.route === "/becomenanny")[0],
+      layout.filter(item => item.route === "/help")[0]
     ]
   );
 }
