@@ -1,15 +1,13 @@
-import { Box, Container } from '@mui/material';
+import { Container } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
 import ProfileBox from '../components/ProfileBox';
-import getUser from "../components/getUser";
 import OfferBox from "../components/OfferBox";
 
 import Database from "../data.json"
 
 export default function Profile({uid}) {
   const { url_uid } = useParams();
-  const user = getUser(uid);
 
   var offers = Database.offers.filter(item => item.uidNanny === url_uid * 1 && item.requestID === 0);
   if (offers === null)

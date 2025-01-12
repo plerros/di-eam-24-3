@@ -30,6 +30,9 @@ function matchExact(r, str) {
 
 function breadcrumbNameMap(to) {
   const res = layout.filter(item => matchExact(item.route, to));
+  if (res.length > 0) {
+    return res[res.length - 1];
+  }
   return ({text: to.matchAll("[A-Za-z0-9_]*$")});
 }
 
