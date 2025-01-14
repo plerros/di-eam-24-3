@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import {Link} from 'react-router-dom';
 
-import getUser from "../getUser";
+import * as Database from "../Database";
 import UserBox from "./UserBox";
 
 // data
@@ -46,7 +46,7 @@ export default function Navbar({uid}) {
     setAnchorElNav(null);
   };
 
-  const user = getUser(uid)
+  const user = Database.getUser(uid)
   const pages = MenuPages(user.role);
 
   return (

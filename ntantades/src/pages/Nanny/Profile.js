@@ -2,10 +2,10 @@ import { Container } from "@mui/material";
 import ProfileBox from "../../components/ProfileBox"
 import OfferBox from "../../components/OfferBox";
 
-import Database from "../../data.json"
+import * as Database from "../../components/Database"
 
 export default function Profile({uid}) {
-  var offers = Database.offers.filter(item => item.uidNanny === uid * 1 && item.requestID === 0);
+  var offers = Database.getOffers({uidNanny:uid*1, requestID:0});
   if (offers === null)
     offers = []
 

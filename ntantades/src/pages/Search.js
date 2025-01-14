@@ -7,7 +7,7 @@ import NannyBox from "../components/NannyBox";
 import TimeRangeSlider from '../components/TimeRangeSlider';
 import InputSelect from '../components/InputSelect.js'
 
-import Database from "../data.json"
+import * as Database from "../components/Database.js"
 import municipalities from '../municipalities.json'
 
 export default function Search() {
@@ -59,33 +59,31 @@ export default function Search() {
     setSunday(!sunday);
   };
 
-  const filteredOffers = Database.offers.filter(item =>
-    (item.id !== 0)
-    && (
-      (item.type === ((fullTime) ? "FullTime" : ""))
-      || (item.type === ((partTime) ? "PartTime" : ""))
-    )
-    && (!monday || item.availableDays.includes("MON"))
-    && (!tuesday || item.availableDays.includes("TUE"))
-    && (!wednesday || item.availableDays.includes("WED"))
-    && (!thursday || item.availableDays.includes("THU"))
-    && (!friday || item.availableDays.includes("FRI"))
-    && (!saturday || item.availableDays.includes("SAT"))
-    && (!sunday || item.availableDays.includes("SUN"))
-    && (item.availableHours[0] <= hours[0])
-    && (item.availableHours[1] >= hours[1])
-    && (item.requestID === 0)
-  )
+  var daysArray = [];
+  if (monday)
+      daysArray.push("MON")
+  if (tuesday)
+    daysArray.push("TUE")
+  if (thursday)
+      daysArray.push("THU")
+  if (wednesday)
+      daysArray.push("WED")
+  if (friday)
+      daysArray.push("FRI")
+  if (saturday)
+      daysArray.push("SAT")
+  if (sunday)
+      daysArray.push("SUN")
+  
+  const filteredOffers = Database.getOffers({
+    notId: 0,
+    availableDays: daysArray,
+    availableHours: hours,
+    requestID: 0
+  });
 
-  const nanniesWithOffer = [];
-  for (let i = 0; i < filteredOffers.length; i++) {
-    nanniesWithOffer.push(filteredOffers[i].uidNanny)
-  }
-
-  const filteredNannies = Database.users.filter(item =>
-    (nanniesWithOffer.includes(item.userID))
-    && (item.municipality === municipality)
-  )
+  const nanniesWithOffer = filteredOffers.map((item) => (item.uidNanny));
+  const filteredNannies = Database.getUsers({listUserID: nanniesWithOffer, municipality: municipality});
 
   return (
     <Container

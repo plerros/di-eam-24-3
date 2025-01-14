@@ -1,12 +1,11 @@
 import { Avatar, Box, Button, Divider, Rating } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-import getUser from "../components/getUser"
-import getNannyStars from "../components/getNannyStars"
+import * as Database from "./Database";
 
 export default function ProfileBox({uid}) {
-  const user = getUser(uid);
-  const stars = getNannyStars(uid);
+  const user = Database.getUser(uid);
+  const stars = Database.getStars(uid);
 
   return (
     <Box

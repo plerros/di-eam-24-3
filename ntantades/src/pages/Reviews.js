@@ -2,13 +2,12 @@ import { Box, Button, Container } from '@mui/material';
 import { useParams, Link } from 'react-router-dom';
 
 import ReviewBox from "../components/ReviewBox";
-import getUser from "../components/getUser";
 
-import Database from "../data.json";
+import * as Database from "../components/Database";
 
 function back_button(url_uid, uid) {
   if (url_uid === uid) {
-    if (getUser(uid).role === "Nanny") {
+    if (Database.getUser(uid).role === "Nanny") {
       return (
         <Box sx={{ p: 1 }}>
           <Button
@@ -21,7 +20,7 @@ function back_button(url_uid, uid) {
         </Box>
       );
     }
-    if (getUser(uid).role === "Family") {
+    if (Database.getUser(uid).role === "Family") {
       return (
         <Box sx={{ p: 1 }}>
           <Button
@@ -73,22 +72,11 @@ export default function Reviews({uid}) {
   var { url_uid } = useParams();
   url_uid = 1*url_uid;
 
-  var offers = Database.offers.filter(item => item.uidNanny === url_uid);
-  const requestIDs = [];
-  for (let i = 0; i < offers.length; i++) {
-    if (offers[i].requestID !== 0)
-      requestIDs.push(offers[i].requestID)
-  }
-
-  var agreements = Database.agreements.filter(item => requestIDs.includes(item.requestID));
-  var agreementIDs = [];
-  for (let i = 0; i < agreements.length; i++) {
-    if (agreements[i].id !== 0)
-      agreementIDs.push(agreements[i].id)
-  }
-
-  var reviews = Database.reviews.filter(item => agreementIDs.includes(item.agreementID));
-
+  const offers = Database.getOffers({uidNanny:url_uid})
+  const requestIDs = offers.map((item) => (item.requestID));
+  const agreements = Database.getAgreements({listRequestIDs: requestIDs});
+  const agreementIDs = agreements.map((item) => (item.id));
+  const reviews = Database.getReviews({listAgreementIDs:agreementIDs});
   return (
     <Container
       maxWidth="xl"

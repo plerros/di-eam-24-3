@@ -2,15 +2,14 @@ import { Avatar, Box, Button } from "@mui/material";
 import Rating from '@mui/material/Rating';
 import { Link } from 'react-router-dom';
 
-import getUser from "./getUser";
-import getNannyStars from "./getNannyStars";
+import * as Database from "./Database";
 
 export default function NannyBox({uid}) {
-  var user = getUser(uid);
+  var user = Database.getUser(uid);
   if (user.role !== "Nanny")
     return;
 
-  const stars = getNannyStars(uid);
+  const stars = Database.getStars(uid);
   
   return (
     <Button

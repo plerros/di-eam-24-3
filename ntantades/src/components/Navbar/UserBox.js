@@ -9,7 +9,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import {Link} from 'react-router-dom'
 
-import getUser from '../getUser';
+import * as Database from "../Database";
 
 import layout from "../../pages/layout.json"
 
@@ -53,7 +53,7 @@ export default function UserBox({uid}) {
     setAnchorElUser(null);
   };
 
-  const user = getUser(uid);
+  const user = Database.getUser(uid);
   const settings = UserDropdown(user.role, user.userID);
 
   if (user.role === "Nanny" || user.role === "Family") {

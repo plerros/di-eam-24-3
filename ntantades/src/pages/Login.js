@@ -3,11 +3,10 @@ import { Navigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
 
-import getUser from '../components/getUser'
 import InputText from '../components/InputText';
 import InputPassword from '../components/InputPassword';
 
-import Database from "../data.json";
+import * as Database from "../components/Database"
 
 export default function Login({uid, handleUID}) {
   const [email, setEmail] = React.useState("");
@@ -27,9 +26,9 @@ export default function Login({uid, handleUID}) {
   React.useEffect(() => {
     if (submit) {
       // Find the user based on credentials
-      var user = Database.users.filter(item => (item.email === email) && (item.password === password))[0];
+      var user = Database.getUsers({email:email, password:password})[0];
       if (user === null || typeof user === 'undefined')
-        user = Database.users.filter(item => item.userID === 0)[0]
+        user = Database.getUser(0);
     
       if (user.userID !== 0) {
         handleUID(user.userID)
@@ -47,7 +46,7 @@ export default function Login({uid, handleUID}) {
   
   /* Already logged in */
   if (uid !== 0) {
-    const user = getUser(uid);
+    const user = Database.getUser(uid);
     if (user.role === "Nanny") {
       return (
         <Navigate to="/nanny" />
