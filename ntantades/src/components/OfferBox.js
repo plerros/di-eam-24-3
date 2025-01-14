@@ -18,16 +18,20 @@ const day2name = {
 function actions (offer_uid, uid) {
   if (uid === 0) {
     return (
-      <Box>
+      <Box      >
         <Button
+          variant="contained"
           component={Link}
           to={"/familysignup"}
+          sx={{ m: 1 }}
         >
           ΡΑΝΤΕΒΟΥ
         </Button>
         <Button
+          variant="outlined"
           component={Link}
           to={"/familysignup"}
+          sx={{ m: 1 }}
         >
           ΣΥΝΕΡΓΑΣΙΑ
         </Button>
@@ -38,7 +42,10 @@ function actions (offer_uid, uid) {
   if (user.role === "Nanny") {
     if (offer_uid === uid) {
       return (
-        <Button>
+        <Button
+          variant="contained"
+          sx={{ m: 1 }}
+        >
           ΕΠΕΞΕΡΓΑΣΙΑ
         </Button>
       );
@@ -48,10 +55,16 @@ function actions (offer_uid, uid) {
 
   return (
     <Box>
-      <Button>
+      <Button
+        variant="contained"
+        sx={{ m: 1 }}
+      >
         ΡΑΝΤΕΒΟΥ
       </Button>
-      <Button>
+      <Button
+        variant="outlined"
+        sx={{ m: 1 }}
+      >
         ΣΥΝΕΡΓΑΣΙΑ
       </Button>
     </Box>
