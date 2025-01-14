@@ -13,16 +13,16 @@ import getUser from '../getUser';
 
 import layout from "../../pages/layout.json"
 
-function UserDropdown(role) {
+function UserDropdown(role, uid) {
   if (role === "Nanny") {
     return (
       [
-        layout["/nanny"],
-        layout["/nanny/offers"],
-        layout["/nanny/rendezvous"],
-        layout["/nanny/requests"],
-        layout["/nanny/agreements"],
-        layout["/logout"]
+        layout.filter(item => item.route === "/nanny")[0],
+        layout.filter(item => item.route === "/nanny/offers")[0],
+        layout.filter(item => item.route === "/nanny/rendezvous")[0],
+        layout.filter(item => item.route === "/nanny/requests")[0],
+        layout.filter(item => item.route === "/nanny/agreements")[0],
+        layout.filter(item => item.route === "/logout")[0]
       ]
     );
   }
@@ -30,11 +30,11 @@ function UserDropdown(role) {
   if (role === "Family") {
     return (
       [
-        layout["/family"],
-        layout["/family/rendezvous"],
-        layout["/family/requests"],
-        layout["/family/agreements"],
-        layout["/logout"]
+        layout.filter(item => item.route === "/family")[0],
+        layout.filter(item => item.route === "/family/rendezvous")[0],
+        layout.filter(item => item.route === "/family/requests")[0],
+        layout.filter(item => item.route === "/family/agreements")[0],
+        layout.filter(item => item.route === "/logout")[0]
       ]
     );
   }
@@ -54,7 +54,7 @@ export default function UserBox({uid}) {
   };
 
   const user = getUser(uid);
-  const settings = UserDropdown(user.role);
+  const settings = UserDropdown(user.role, user.userID);
 
   if (user.role === "Nanny" || user.role === "Family") {
     return (
@@ -100,9 +100,9 @@ export default function UserBox({uid}) {
         onClick={handleCloseUserMenu}
         sx={{ color: 'white', display: 'block' }}
         component={Link}
-        to={layout["/login"].route}
+        to={layout.filter(item => item.route === "/login")[0].route}
       >
-        {layout["/login"].title}
+        {layout.filter(item => item.route === "/login")[0].title}
       </Button>
     </Box>
   );

@@ -16,11 +16,24 @@ import {
 
 import layout from "../pages/layout.json"
 
+function matchExact(r, str) {
+  const match = str.match(r);
+  if (match === null)
+    return false;
+
+  if (match.length === 0)
+      return false;
+
+  const pos = (match.length > 1) ? match.length - 1 : 0;
+  return str === match[pos];
+}
+
 function breadcrumbNameMap(to) {
-  if (layout[to] != null) {
-    return layout[to];
+  const res = layout.filter(item => matchExact(item.route, to));
+  if (res.length > 0) {
+    return res[res.length - 1];
   }
-  return ([]);
+  return ({text: to.matchAll("[A-Za-z0-9_]*$")});
 }
 
 function ListItemLink(props) {

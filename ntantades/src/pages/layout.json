@@ -1,73 +1,87 @@
-{
-  "/" : {
+[
+  {
     "text"      : "Αρχική",
     "title"     : "ΑΡΧΙΚΗ",
     "jspath"    : "pages/Home",
     "component" : "Home",
     "route"     : "/"
   },
-  "/search" : {
+  {
     "text"      : "Αναζήτηση",
     "title"     : "ΑΝΑΖΗΤΗΣΗ",
     "jspath"    : "pages/Search",
     "component" : "Search",
     "route"     : "/search"
   },
-  "/becomenanny" : {
+  {
     "text"      : "Γίνε Νταντά",
     "title"     : "ΓΙΝΕ ΝΤΑΝΤΑ",
     "jspath"    : "pages/BecomeNanny",
     "component" : "BecomeNanny",
     "route"     : "/becomenanny"
   },
-  "/help" : {
+  {
     "text"      : "Βοήθεια",
     "title"     : "ΒΟΗΘΕΙΑ",
     "jspath"    : "pages/Help",
     "component" : "Help",
     "route"     : "/help"
   },
-  "/login" : {
+  {
     "text"      : "Είσοδος",
     "title"     : "ΕΙΣΟΔΟΣ",
     "jspath"    : "pages/Login",
     "component" : "Login",
     "route"     : "/login"
   },
-  "/logout" : {
+  {
     "text"      : "Έξοδος",
     "title"     : "ΕΞΟΔΟΣ",
     "jspath"    : "pages/Logout",
     "component" : "Logout",
     "route"     : "/logout"
   },
+  {
+    "text"      : "Χρήστες",
+    "title"     : "ΧΡΗΣΤΕΣ",
+    "jspath"    : "pages/Users",
+    "component" : "Users",
+    "route"     : "/users"
+  },
+  {
+    "text"      : "Αξιολογήσεις",
+    "title"     : "ΑΞΙΟΛΟΓΗΣΕΙΣ",
+    "jspath"    : "pages/Reviews",
+    "component" : "Reviews",
+    "route"     : "/users/.*/reviews"
+  },
 
 
-  "/family" : {
+  {
     "text"      : "Προφίλ",
     "jspath"    : "/family/Profile",
     "component" : "FamilyProfile",
     "route"     : "/family"
   },
-  "/family/agreements" : {
+  {
     "text"      : "Συμφωνητικά",
     "jspath"    : "/family/Agreements",
     "component" : "FamilyAgreements",
     "route"     : "/family/agreements"
   },
-  "/family/rendezvous" : {
+  {
     "text"      : "Ραντεβού",
     "jspath"    : "/family/Rendezvous",
     "component" : "FamilyRendezvous",
     "route"     : "/family/rendezvous"
   },
-  "/family/requests" : {
+  {
     "text"      : "Αιτήσεις",
     "jspath"    : "/family/Requests",
     "component" : "FamilyRequests",
     "route"     : "/family/requests"
   },
-  "/family/signup" : {
+  {
     "text"      : "Εγγραφή Οικογένειας",
     "jspath"    : "/family/SignUp",
     "component" : "FamilySignUp",
@@ -75,40 +89,40 @@
   },
 
   
-  "/nanny" : {
+  {
     "text"      : "Προφίλ",
     "jspath"    : "/nanny/Profile",
     "component" : "NannyProfile",
     "route"     : "/nanny"
   },
-  "/nanny/agreements" : {
+  {
     "text"      : "Συμφωνητικά",
     "jspath"    : "/nanny/Agreements",
     "component" : "NannyAgreements",
     "route"     : "/nanny/agreements"
   },
-  "/nanny/offers" : {
+  {
     "text"      : "Αγγελίες",
     "jspath"    : "/nanny/Offers",
     "component" : "NannyOffers",
     "route"     : "/nanny/offers"
   },
-  "/nanny/rendezvous" : {
+  {
     "text"      : "Ραντεβού",
     "jspath"    : "/nanny/Rendezvous",
     "component" : "NannyRendezvous",
     "route"     : "/nanny/rendezvous"
   },
-  "/nanny/requests" : {
+  {
     "text"      : "Αιτήσεις",
     "jspath"    : "/nanny/Requests",
     "component" : "NannyRequests",
     "route"     : "/nanny/requests"
   },
-  "/nannysignup" : {
+  {
     "text"      : "Εγγραφή Νταντάς",
     "jspath"    : "/Nanny/SignUp",
     "component" : "NannySignUp",
     "route"     : "/nannysignup"
   }
-}
+]

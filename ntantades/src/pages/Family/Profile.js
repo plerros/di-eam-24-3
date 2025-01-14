@@ -1,7 +1,17 @@
-export default function Profile() {
+import { Container } from "@mui/material";
+import ProfileBox from "../../components/ProfileBox"
+
+export default function Profile({uid}) {
   return (
-      <div>
-        <h1>This is the Profile page</h1>
-      </div>
-    );
-  }
+    <Container
+      maxWidth="xl"
+      sx = {{
+        display:'flex',
+        flexDirection: 'column',
+        gap: 2
+      }}
+    >
+      <ProfileBox uid={uid}/>
+    </Container>
+  );
+}
