@@ -1,9 +1,7 @@
 import { Box, Button } from "@mui/material";
 import {Link} from 'react-router-dom'
 
-import getUser from "./getUser";
-
-import Database from "../data.json"
+import * as Database from "./Database";
 
 const day2name = {
   "MON": "Δευτέρα",
@@ -38,7 +36,7 @@ function actions (offer_uid, uid) {
       </Box>
     );
   }
-  const user = getUser(uid);
+  const user = Database.getUser(uid);
   if (user.role === "Nanny") {
     if (offer_uid === uid) {
       return (
@@ -72,7 +70,7 @@ function actions (offer_uid, uid) {
 }
 
 export default function OfferBox({id, uid}) {
-  const offer = Database.offers.filter(item => item.id === id)[0];
+  const offer = Database.getOffers({id:id})[0];
 
   return (
     <Box sx = {{

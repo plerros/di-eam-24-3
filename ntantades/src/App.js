@@ -2,7 +2,6 @@ import './App.css';
 import * as React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router';
 
-import getUser from './components/getUser';
 import Navbar from './components/Navbar/Navbar';
 import Breadcrumb from './components/Breadcrumb';
 
@@ -33,15 +32,15 @@ import Playground from './pages/Internal/Playground';
 
 import NoPage from "./pages/NoPage";
 
-//import Database from "./data.json";
+import * as Database from "./components/Database";
 
 const PrivateFamily = ({uid}) => {
-  const user = getUser(uid);
+  const user = Database.getUser(uid);
   return (user.role === "Family") ? <Outlet /> : <Navigate to="/nopage" />;
 }
 
 const PrivateNanny = ({uid}) => {
-  const user = getUser(uid);
+  const user = Database.getUser(uid);
   return (user.role === "Nanny") ? <Outlet /> : <Navigate to="/nopage" />;
 }
 
@@ -53,6 +52,9 @@ export default function App() {
     localStorage.setItem('uid', uid);
   }
 
+  React.useEffect(() => {
+    Database.json_to_localstorage();
+  }, []);
   return (
     <BrowserRouter>
       <Navbar

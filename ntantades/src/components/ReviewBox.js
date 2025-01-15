@@ -1,12 +1,14 @@
 import { Avatar, Box, Rating } from "@mui/material";
-import Database from "../data.json";
+import * as Database from "./Database";
 
 export default function Reviews({id}) {
-  const review = Database.reviews.filter(item => item.id === id)[0];
-  const agreement = Database.agreements.filter(item => item.id === review.agreementID)[0];
-  const request = Database.requests.filter(item => item.id === agreement.requestID)[0];
-  const reviewer = Database.users.filter(item => item.userID === request.uidFamily)[0];
+  const review = Database.getReviews({id:id})[0];
+  const agreement = Database.getAgreements({id:review.agreementID})[0];
+  const request = Database.getRequests({id:agreement.requestID})[0];
+  const reviewer = Database.getUser(request.uidFamily);
 
+  console.log(reviewer)
+  
   return (
     <Box sx = {{
       display: 'flex',
