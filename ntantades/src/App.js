@@ -30,6 +30,7 @@ import NannySignUp     from "./pages/Nanny/SignUp";
 import RoleSwitch from "./pages/Internal/RoleSwitch";
 import Playground from './pages/Internal/Playground';
 
+import Redirect from "./pages/Redirect";
 import NoPage from "./pages/NoPage";
 
 import * as Database from "./components/Database";
@@ -46,15 +47,17 @@ const PrivateNanny = ({uid}) => {
 
 export default function App() {
   const storedUID = parseInt(localStorage.getItem('uid'));
-  const [uid, setUID] = React.useState(storedUID);
+  const [uid, setUID] = React.useState(storedUID ? storedUID : 0);
   const handleUID = (uid) => {
     setUID(uid);
     localStorage.setItem('uid', uid);
   }
 
-  React.useEffect(() => {
-    Database.json_to_localstorage();
-  }, []);
+  const [redirect, setRedirect] = React.useState(["/", "/"]);
+
+  console.log(redirect);
+
+  Database.json_to_localstorage();
   return (
     <BrowserRouter>
       <Navbar
@@ -66,6 +69,7 @@ export default function App() {
         <Route path="search" element={<Search />} />
         <Route path="becomenanny" element={<BecomeNanny />} />
         <Route path="help" element={<Help />} />
+        <Route path="redirect" element={<Redirect redirect={redirect} setRedirect={setRedirect} />} />
 
         {/* write login / logout system */}
         <Route path="login" element={
@@ -75,10 +79,10 @@ export default function App() {
           <Logout handleUID={handleUID} />
         } />
 
-        <Route path="familysignup" element={<FamilySignUp />} />
-        <Route path="nannysignup"  element={<NannySignUp />} />
+        <Route path="familysignup" element={<FamilySignUp uid={uid} setUID={setUID}/>} />
+        <Route path="nannysignup"  element={<NannySignUp uid={uid} setUID={setUID}/>} />
 
-        <Route path="users/:url_uid" element={<Users uid={uid} />}/>
+        <Route path="users/:url_uid" element={<Users uid={uid} redirect={redirect} setRedirect={setRedirect}/>}/>
         <Route path="users/:url_uid/reviews" element={<Reviews uid={uid}/>}/>
 
         <Route path="family" element={<PrivateFamily uid={uid}/>}>

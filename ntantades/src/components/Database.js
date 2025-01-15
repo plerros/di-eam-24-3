@@ -12,6 +12,10 @@ export function get() {
     return (JSON.parse(localStorage.getItem('Database')));
 }
 
+export function set(JsonDatabase) {
+  localStorage.setItem('Database', JSON.stringify(JsonDatabase));
+}
+
 export function getUser(uid) {
     const Database = get();
     var user = Database.users.filter(item => item.userID === uid)[0];
@@ -21,11 +25,66 @@ export function getUser(uid) {
     return user;
 }
 
-export function setUser(uid) {
+export function setUser(props) {
+  const Database = get();
+  if (props.userID === undefined)
+    return;
 
+  if (props.userID > Database.users.length)
+    return;
+
+  console.log(props.userID);
+  var userID = props.userID;
+
+  if (props.userID < 0) {
+    userID = Database.users.length;
+    Database.users.push({});
+    Database.users[userID].userID = userID;
+  }
+
+  if (props.email !== undefined)
+    Database.users[userID].email = props.email;
+
+  if (props.password !== undefined)
+    Database.users[userID].password = props.password;
+
+  if (props.firstName !== undefined)
+    Database.users[userID].firstName = props.firstName;
+
+  if (props.lastName !== undefined)
+    Database.users[userID].lastName = props.lastName;
+
+  if (props.age !== undefined)
+    Database.users[userID].age = props.age;
+
+  if (props.gender !== undefined)
+    Database.users[userID].gender = props.gender;
+
+  if (props.phone !== undefined)
+    Database.users[userID].phone = props.phone;
+
+  if (props.address !== undefined)
+    Database.users[userID].address = props.address;
+
+  if (props.municipality !== undefined)
+    Database.users[userID].municipality = props.municipality;
+
+  if (props.postalCode !== undefined)
+    Database.users[userID].postalCode = props.postalCode;
+
+  if (props.role !== undefined)
+    Database.users[userID].role = props.role;
+
+  if (props.picture !== undefined)
+    Database.users[userID].picture = props.picture;
+
+  if (props.description !== undefined)
+    Database.users[userID].description = props.description;
+  
+  set(Database);
 }
 
-export function getUsers (props) { 
+export function getUsers (props) {
   const Database = get();
   return  (Database.users.filter(item =>
     (props.userID === undefined || (
@@ -171,8 +230,7 @@ export function getReviews (props) {
   ))
 }
 
-export  function getStars (uid) {
-  const Database = get();
+export function getStars (uid) {
   const offers = getOffers({uidNanny:uid, notRequestID:0});
   const requestIDs = offers.map((item) => (item.id));
   const agreements = getAgreements({notId:0, listRequestIDs: requestIDs});

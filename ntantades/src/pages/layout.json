@@ -7,8 +7,8 @@
     "route"     : "/"
   },
   {
-    "text"      : "Αναζήτηση",
-    "title"     : "ΑΝΑΖΗΤΗΣΗ",
+    "text"      : "Βρές Νταντά",
+    "title"     : "ΒΡΕΣ ΝΤΑΝΤΆ",
     "jspath"    : "pages/Search",
     "component" : "Search",
     "route"     : "/search"

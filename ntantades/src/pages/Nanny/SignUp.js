@@ -2,48 +2,67 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import InputText from '../../components/InputText';
 import InputPassword from '../../components/InputPassword';
-import InputSelect from '../../components/InputSelect.js'
-import { Button } from '@mui/material';
+import InputSelect from '../../components/InputSelect.js';
+import InputFile from '../../components/InputFile.js'
+import { Button, Checkbox, FormControl, FormControlLabel, FormHelperText, Step, StepLabel, Stepper } from '@mui/material';
 
 import municipalities from '../../municipalities.json'
+import { Navigate } from 'react-router-dom';
+
+import * as Database from "../../components/Database.js"
+import InputParagraph from '../../components/InputParagraph.js';
 
 const issueNone = {error:false, help:""};
 const issueRequired = {error:true, help:"Υποχρεωτικό"};
 
+function LSgetItemSafe(item)
+{
+  const result = localStorage.getItem(item);
+  return (result === null) ? "" : result;
+}
+
 const initialState = {
   progressPage      : 1,
 
-  email             : localStorage.getItem('signupEmail'),
+  email             : LSgetItemSafe('signupEmail'),
   emailIssue        : issueNone,
 
   password          : "",
   passwordIssue     : issueNone,
 
-  firstName         : localStorage.getItem('signupfirstName'),
+  firstName         : LSgetItemSafe('signupFirstName'),
   firstNameIssue    : issueNone,
 
-  lastName         : localStorage.getItem('signuplastName'),
-  lastNameIssue    : issueNone,
+  lastName          : LSgetItemSafe('signupLastName'),
+  lastNameIssue     : issueNone,
 
-  age               : localStorage.getItem('signupAge'),
+  age               : LSgetItemSafe('signupAge'),
   ageIssue          : issueNone,
 
-  gender            : localStorage.getItem('signupGender'),
+  gender            : LSgetItemSafe('signupGender'),
   genderIssue       : issueNone,
 
-  phone             : localStorage.getItem('signupPhone'),
+  phone             : LSgetItemSafe('signupPhone'),
   phoneIssue        : issueNone,
 
-  municipality      : localStorage.getItem('signupMunicipality'),
+  municipality      : LSgetItemSafe('signupMunicipality'),
   municipalityIssue : issueNone,
 
-  homeAddress       : localStorage.getItem('signupHomeAddress'),
+  homeAddress       : LSgetItemSafe('signupHomeAddress'),
   homeAddressIssue  : issueNone,
 
-  postalCode        : localStorage.getItem('signupPostalCode'),
-  postalCodeIssue   : issueNone
-}
+  postalCode        : LSgetItemSafe('signupPostalCode'),
+  postalCodeIssue   : issueNone,
 
+  referenceLetter      : "",
+  referenceLetterIssue : issueNone,
+
+  description          : LSgetItemSafe('signupDescription'),
+  descriptionIssue     : issueNone,
+
+  agreement            : false,
+  agreementIssue       : issueNone
+}
 
 function reducer(state, action) {
   const isNumeric = (str) => /^[0-9]+$/gi.test(str);
@@ -52,25 +71,31 @@ function reducer(state, action) {
       localStorage.setItem('signupEmail', action.nextEmail);
       return {
         ...state,
-        email: action.nextEmail
+        email: action.nextEmail,
+        passwordIssue: issueNone
       }
     }
     case 'changed_password': {
       return {
         ...state,
-        password: action.nextPassword
+        password: action.nextPassword,
+        passwordIssue: issueNone
       }
     }
     case 'changed_firstName': {
+      localStorage.setItem('signupFirstName', action.nextFirstName);
       return {
         ...state,
-        firstName: action.nextFirstName
+        firstName: action.nextFirstName,
+        firstNameIssue: issueNone
       }
     }
     case 'changed_lastName': {
+      localStorage.setItem('signupLastName', action.nextLastName);
       return {
         ...state,
-        lastName: action.nextLastName
+        lastName: action.nextLastName,
+        lastNameIssue: issueNone
       }
     }
     case 'changed_age': {
@@ -78,7 +103,8 @@ function reducer(state, action) {
         localStorage.setItem('signupAge', action.nextAge);
         return {
           ...state,
-          age: action.nextAge
+          age: action.nextAge,
+          ageIssue: issueNone
         }
       }
       return {
@@ -86,48 +112,74 @@ function reducer(state, action) {
       }
     }
     case 'changed_gender': {
+      localStorage.setItem('signupGender', action.nextGender);
       return {
         ...state,
-        gender: action.nextGender
+        gender: action.nextGender,
+        genderIssue: issueNone
       }
     }
     case 'changed_phone': {
+      localStorage.setItem('signupPhone', action.nextPhone);
       return {
         ...state,
-        phone: action.nextPhone
+        phone: action.nextPhone,
+        phoneIssue: issueNone
       }
     }
     case 'changed_municipality': {
+      localStorage.setItem('signupMunicipality', action.nextMunicipality);
       return {
         ...state,
-        municipality: action.nextMunicipality
+        municipality: action.nextMunicipality,
+        municipalityIssue: issueNone
       }
     }
     case 'changed_homeAddress': {
+      localStorage.setItem('signupHomeAddress', action.nextHomeAddress);
       return {
         ...state,
-        homeAddress: action.nextHomeAddress
+        homeAddress: action.nextHomeAddress,
+        homeAddressIssue: issueNone
       }
     }
     case 'changed_postalCode': {
+      localStorage.setItem('signupPostalCode', action.nextPostalCode);
       return {
         ...state,
-        postalCode: action.nextPostalCode
+        postalCode: action.nextPostalCode,
+        postalCodeIssue: issueNone
+      }
+    }
+    case 'changed_referenceLetter': {
+      localStorage.setItem('referenceLetter', action.nextReferenceLetter);
+      return {
+        ...state,
+        referenceLetter: action.nextReferenceLetter,
+        referenceLetterIssue: issueNone
+      }
+    }
+
+    case 'changed_description': {
+      localStorage.setItem('signupMunicipality', action.nextDescription);
+      return {
+        ...state,
+        description: action.nextDescription,
+        descriptionIssue: issueNone
+      }
+    }
+
+    case 'changed_agreement': {
+      localStorage.setItem('referenceLetter', action.nextAgreement);
+      return {
+        ...state,
+        agreement: action.nextAgreement,
+        agreementIssue: issueNone
       }
     }
     case 'incremented_progressPage': {
       switch (state.progressPage) {
         case 1: {
-          if (state.email === "" || state.password === "") {
-            return {
-              ...state,
-              emailIssue: (state.email === "") ? issueRequired : issueNone,
-              passwordIssue: (state.password === "") ? issueRequired : issueNone
-            }
-          }
-          break;
-        }
-        case 2: {
           if (
             (state.firstName === "")
             || (state.lastName === "")
@@ -140,8 +192,8 @@ function reducer(state, action) {
           ) {
             return {
               ...state,
-              firstNameIssue: (state.name === "") ? issueRequired : issueNone,
-              lastNameIssue: (state.name === "") ? issueRequired : issueNone,
+              firstNameIssue: (state.firstName === "") ? issueRequired : issueNone,
+              lastNameIssue: (state.lastName === "") ? issueRequired : issueNone,
               ageIssue: (state.age === "") ? issueRequired : issueNone,
               genderIssue: (state.gender === "") ? issueRequired : issueNone,
               phoneIssue: (state.phone === "") ? issueRequired : issueNone,
@@ -150,6 +202,46 @@ function reducer(state, action) {
               postalCodeIssue: (state.postalCode === "") ? issueRequired : issueNone
             }
           }
+          break;
+        }
+        case 2: {
+          if (state.referenceLetter === "") {
+            return {
+              ...state,
+              referenceLetterIssue: (state.referenceLetter === "") ? issueRequired : issueNone,
+            }
+          }
+          break;
+        }
+        case 3: {
+          if (
+            (state.email === "")
+            || (state.password === "")
+            || (state.agreement === false)
+          ) {
+            return {
+              ...state,
+              emailIssue: (state.email === "") ? issueRequired : issueNone,
+              passwordIssue: (state.password === "") ? issueRequired : issueNone,
+              agreementIssue: (state.agreement === false) ? issueRequired : issueNone
+            }
+          }
+
+          Database.setUser({
+            userID:       -1,
+            email:        state.email,
+            password:     state.password,
+            firstName:    state.firstName,
+            lastName:     state.lastName,
+            age:          state.age,
+            phone:        state.phone,
+            municipality: state.municipality,
+            homeAddress:  state.homeAddress,
+            postalCode:   state.postalCode,
+            description:  state.description,
+            role:         "Nanny"
+          })
+
           break;
         }
         default: {}
@@ -235,46 +327,36 @@ function formInputs(state, dispatch) {
     })
   };
 
-  if (state.progressPage === 1) {
-    return (
-      <Box
-        component="form"
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column',
-          '& > :not(style)': { m: 1, width: '25ch'} 
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <InputText
-          label={"e-mail"}
-          required={true}
-          value={state.email}
-          setValue={handleEmail}
-          issue={state.emailIssue}
-        />
-        <InputPassword
-          value={state.password}
-          setValue={handlePassword}
-          issue={state.passwordIssue}
-        />
-      </Box>
-    );
+  const handleReferenceLetter = (value) => {
+    dispatch({
+      type: 'changed_referenceLetter',
+      nextReferenceLetter: value
+    })
   }
-  else if (state.progressPage === 2) {
+
+  const handleDescription = (value) => {
+    dispatch({
+      type: 'changed_description',
+      nextDescription: value
+    })
+  }
+
+  const handleAgreement = () => {
+    dispatch({
+      type: 'changed_agreement',
+      nextAgreement: !(state.agreement)
+    })
+  }
+
+   if (state.progressPage === 1) {
     return (
       <Box
-        component="form"
         sx={{
           display: 'flex',
           alignItems: 'center',
           flexDirection: 'column',
           '& > :not(style)': { m: 1, width: '25ch'} 
         }}
-        noValidate
-        autoComplete="off"
       >
         <InputText
           label={"Όνομα"}
@@ -337,13 +419,104 @@ function formInputs(state, dispatch) {
       </Box>
     );
   }
+  else if (state.progressPage === 2) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          '& > :not(style)': { m: 1, width: '25ch'} 
+        }}
+      >
+        <InputFile
+          label={"Συστατική επιστολή"}
+          required={true}
+          value={state.referenceLetter}
+          setValue={handleReferenceLetter}
+          issue={state.referenceLetterIssue}
+        />
+      </Box>
+    );
+  }
+  else if (state.progressPage === 3) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          '& > :not(style)': { m: 1, width: '25ch'} 
+        }}
+      >
+        <InputParagraph
+          label={"Περιγραφή προφίλ"}
+          required={false}
+          value={state.description}
+          setValue={handleDescription}
+          issue={state.descriptionIssue}
+        />
+        <InputText
+          label={"e-mail"}
+          required={true}
+          value={state.email}
+          setValue={handleEmail}
+          issue={state.emailIssue}
+        />
+        <InputPassword
+          value={state.password}
+          setValue={handlePassword}
+          issue={state.passwordIssue}
+        />
+        <FormControl
+          error={state.agreementIssue.error}
+          component="fieldset"
+          sx={{ m: 3 }}
+          variant="standard"
+        >
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={state.agreement}
+                onChange={handleAgreement}
+                required
+              />
+            }
+            label="Αποδέχομαι τους όρους χρήσης"
+          />
+          <FormHelperText>
+            {state.agreementIssue.help}
+          </FormHelperText>
+        </FormControl>
+      </Box>
+    );
+  }
 }
 
-export default function SignUp() {
+export default function SignUp({uid, setUID}) {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   const iterateProgressPage = () => {
     dispatch({ type: 'incremented_progressPage' })
+  }
+
+  React.useEffect(() => {
+    if (state.progressPage < 4)
+      return;
+
+    if (uid === 0)
+      setUID(Database.get().users.length - 1);
+    // Technically wrong, but works with single user.
+
+    
+
+  }, [uid, setUID, state.progressPage]);
+
+  if (uid !== 0) {
+    console.log(uid);
+    return (
+      <Navigate to="/redirect"/>
+    );
   }
 
   return (
@@ -358,14 +531,28 @@ export default function SignUp() {
       noValidate
       autoComplete="off"
     >
+      <Stepper activeStep={state.progressPage - 1}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center'
+        }}
+      >
+        <Step key={1}>
+            <StepLabel>{"Προσωπικά στοιχεία"}</StepLabel>
+        </Step>
+        <Step key={2}>
+            <StepLabel>{"Επαγγελματική εμπειρία"}</StepLabel>
+        </Step>
+        <Step key={3}>
+            <StepLabel>{"Ολοκλήρωση λογαριασμού"}</StepLabel>
+        </Step>
+      </Stepper>
       {formInputs(state, dispatch)}
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'center'
         }}
-        noValidate
-        autoComplete="off"
       >
         <Button
           variant="contained"
