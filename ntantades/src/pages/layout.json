@@ -102,6 +102,12 @@
     "route"     : "/nanny/agreements"
   },
   {
+    "text"      : "Νέα Αγγελία",
+    "jspath"    : "/nanny/NewOffer",
+    "component" : "NannyNewOffer",
+    "route"     : "/nanny/newoffer"
+  },
+  {
     "text"      : "Αγγελίες",
     "jspath"    : "/nanny/Offers",
     "component" : "NannyOffers",

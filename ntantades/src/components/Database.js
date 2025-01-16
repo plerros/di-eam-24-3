@@ -33,7 +33,6 @@ export function setUser(props) {
   if (props.userID > Database.users.length)
     return;
 
-  console.log(props.userID);
   var userID = props.userID;
 
   if (props.userID < 0) {
@@ -126,6 +125,42 @@ export function getUsers (props) {
     ))
   ))
 
+}
+
+export function setOffer (props) {
+  const Database = get();
+  if (props.id === undefined)
+    return false;
+
+  if (props.id > Database.offers.length)
+    return false;
+
+  var id = props.id;
+  if (props.id < 0) {
+    id = Database.offers.length;
+    Database.offers.push({});
+    Database.offers[id].id = id;
+  }
+
+  if (props.uidNanny !== undefined)
+    Database.offers[id].uidNanny = props.uidNanny;
+  if (props.published !== undefined)
+    Database.offers[id].published = props.published;
+  if (props.type !== undefined)
+    Database.offers[id].type = props.type;
+  if (props.availableDays !== undefined)
+    Database.offers[id].availableDays = props.availableDays;
+  if (props.availableHours !== undefined)
+    Database.offers[id].availableHours = props.availableHours;
+  if (props.rendezvousDays !== undefined)
+    Database.offers[id].rendezvousDays = props.rendezvousDays;
+  if (props.rendezvousHours !== undefined)
+    Database.offers[id].rendezvousHours = props.rendezvousHours;
+  if (props.requestID !== undefined)
+    Database.offers[id].requestID = props.requestID;
+
+  set(Database);
+  return true;
 }
 
 export function getOffers (props) {

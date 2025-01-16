@@ -1,8 +1,14 @@
+import * as React from 'react';
 import { Box, Button, Container, List, ListItem, ListItemText } from "@mui/material";
-
 import { Link } from "react-router-dom";
 
-export default function BecomeNanny() {
+export default function BecomeNanny({setRedirect}) {
+
+  React.useEffect(() => {
+    setRedirect(["/nanny", "/"]);
+  }, [setRedirect]);
+
+
   return (
       <Container
       maxWidth="xl"

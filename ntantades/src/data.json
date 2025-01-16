@@ -85,8 +85,8 @@
       "type"           : "",
       "availableDays"  : [],
       "availableHours" : [],
-      "rendevousDays"  : [],
-      "rendevousHours" : [],
+      "rendezvousDays"  : [],
+      "rendezvousHours" : [],
       "requestID"      : 0
     },
     {
@@ -96,8 +96,8 @@
       "type"           : "FullTime",
       "availableDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT"],
       "availableHours" : [9, 17],
-      "rendevousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
-      "rendevousHours" : [9, 17],
+      "rendezvousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
+      "rendezvousHours" : [9, 17],
       "requestID"      : 1
     },
     {
@@ -107,8 +107,8 @@
       "type"           : "FullTime",
       "availableDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT"],
       "availableHours" : [9, 17],
-      "rendevousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
-      "rendevousHours" : [9, 17],
+      "rendezvousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
+      "rendezvousHours" : [9, 17],
       "requestID"      : 2
     },
     {
@@ -118,8 +118,8 @@
       "type"           : "FullTime",
       "availableDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", ""],
       "availableHours" : [9, 17],
-      "rendevousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
-      "rendevousHours" : [9, 17],
+      "rendezvousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
+      "rendezvousHours" : [9, 17],
       "requestID"      : 0
     },
     {
@@ -129,8 +129,8 @@
       "type"           : "FullTime",
       "availableDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", ""],
       "availableHours" : [9, 17],
-      "rendevousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
-      "rendevousHours" : [9, 17],
+      "rendezvousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
+      "rendezvousHours" : [9, 17],
       "requestID"      : 0
     }
   ],

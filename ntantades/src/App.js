@@ -21,6 +21,7 @@ import FamilyRequests   from "./pages/Family/Requests";
 import FamilySignUp     from "./pages/Family/SignUp";
 
 import NannyAgreements from "./pages/Nanny/Agreements";
+import NannyNewOffer   from "./pages/Nanny/NewOffer"; 
 import NannyOffers     from "./pages/Nanny/Offers";
 import NannyProfile    from "./pages/Nanny/Profile";
 import NannyRendezvous from "./pages/Nanny/Rendezvous";
@@ -55,8 +56,6 @@ export default function App() {
 
   const [redirect, setRedirect] = React.useState(["/", "/"]);
 
-  console.log(redirect);
-
   Database.json_to_localstorage();
   return (
     <BrowserRouter>
@@ -67,7 +66,7 @@ export default function App() {
       <Routes>
         <Route index element={<Home />} />
         <Route path="search" element={<Search />} />
-        <Route path="becomenanny" element={<BecomeNanny />} />
+        <Route path="becomenanny" element={<BecomeNanny setRedirect={setRedirect}/>} />
         <Route path="help" element={<Help />} />
         <Route path="redirect" element={<Redirect redirect={redirect} setRedirect={setRedirect} />} />
 
@@ -95,6 +94,7 @@ export default function App() {
         <Route path="nanny" element={<PrivateNanny uid={uid} />}>
           <Route index element = {<NannyProfile uid={uid} />} />
           <Route path="agreements" element={<NannyAgreements />} />
+          <Route path="newoffer"   element={<NannyNewOffer uid={uid} />} />
           <Route path="offers"     element={<NannyOffers />} />
           <Route path="rendezvous" element={<NannyRendezvous />} />
           <Route path="requests"   element={<NannyRequests />} />

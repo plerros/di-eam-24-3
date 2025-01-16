@@ -1,13 +1,38 @@
-import { Container } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import ProfileBox from "../../components/ProfileBox"
 import OfferBox from "../../components/OfferBox";
+import { Link } from 'react-router-dom'
 
 import * as Database from "../../components/Database"
 
-export default function Profile({uid}) {
+function offersBox(uid)
+{
   var offers = Database.getOffers({uidNanny:uid*1, requestID:0});
   if (offers === null)
-    offers = []
+    offers = [];
+
+  if (offers.length === 0) {
+    return(
+      <Button
+        variant="contained"
+        component={Link}
+        to={"/nanny/newoffer"}
+        sx={{ m: 1 }}
+      >
+        ΝΕΑ ΑΓΓΕΛΙΑ
+      </Button>
+    );
+  }
+
+
+  return(
+    offers.map((offer) => (
+      <OfferBox key={offer.id} id={offer.id} uid={uid}/>
+    ))
+  );
+}
+
+export default function Profile({uid}) {
 
   return (
     <Container
@@ -19,11 +44,8 @@ export default function Profile({uid}) {
       }}
     >
       <ProfileBox uid={uid}/>
-
       {
-        offers.map((offer) => (
-          <OfferBox key={offer.id} id={offer.id} uid={uid}/>
-        ))
+        offersBox(uid)
       }
     </Container>
   );

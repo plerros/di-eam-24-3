@@ -513,7 +513,6 @@ export default function SignUp({uid, setUID}) {
   }, [uid, setUID, state.progressPage]);
 
   if (uid !== 0) {
-    console.log(uid);
     return (
       <Navigate to="/redirect"/>
     );
