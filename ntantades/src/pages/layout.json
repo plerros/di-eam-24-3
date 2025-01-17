@@ -7,8 +7,8 @@
     "route"     : "/"
   },
   {
-    "text"      : "Αναζήτηση",
-    "title"     : "ΑΝΑΖΗΤΗΣΗ",
+    "text"      : "Βρές Νταντά",
+    "title"     : "ΒΡΕΣ ΝΤΑΝΤΆ",
     "jspath"    : "pages/Search",
     "component" : "Search",
     "route"     : "/search"
@@ -100,6 +100,12 @@
     "jspath"    : "/nanny/Agreements",
     "component" : "NannyAgreements",
     "route"     : "/nanny/agreements"
+  },
+  {
+    "text"      : "Νέα Αγγελία",
+    "jspath"    : "/nanny/NewOffer",
+    "component" : "NannyNewOffer",
+    "route"     : "/nanny/newoffer"
   },
   {
     "text"      : "Αγγελίες",

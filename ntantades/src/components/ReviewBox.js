@@ -6,8 +6,6 @@ export default function Reviews({id}) {
   const agreement = Database.getAgreements({id:review.agreementID})[0];
   const request = Database.getRequests({id:agreement.requestID})[0];
   const reviewer = Database.getUser(request.uidFamily);
-
-  console.log(reviewer)
   
   return (
     <Box sx = {{
