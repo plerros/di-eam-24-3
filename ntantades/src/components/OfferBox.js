@@ -1,10 +1,95 @@
 import * as React from "react"
-
-import { Box, Button, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import dayjs from "dayjs"
+import { Box, Button, Dialog, DialogTitle, Stack, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { Link } from 'react-router-dom'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 import * as Database from "./Database";
 import GrayBox from "./GrayBox";
+
+const index2day = [
+  "MON",
+  "TUE",
+  "WED",
+  "THU",
+  "FRI",
+  "SAT",
+  "SUN"
+];
+
+function RendezvousDialog({ onClose, open, offer, uidFamily }) {
+  const [value, setValue] = React.useState(null);
+  const [submit, setSubmit] = React.useState(false);
+
+  const handleClose = () => {
+    onClose();
+  };
+
+  const handleSubmit = () => {
+    setSubmit(true);
+  }
+
+  React.useEffect(() => {
+    if (submit) {
+      Database.setRendezvous({
+        id: -1,
+        uidFamily: uidFamily,
+        offerID: offer.id,
+        scheduled: value.toISOString()
+      })
+    }
+  }, [submit]);
+
+  return (
+    <Dialog onClose={handleClose} open={open}>
+        <DialogTitle> Προγραμματισμός Ραντεβού </DialogTitle>
+
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          
+          <Stack spacing={2} sx={{ minWidth: 305 }}>
+            <DateTimePicker
+              value={value}
+              onChange={setValue}
+              referenceDate={dayjs()}
+              shouldDisableTime={(value, view) => 
+                view === 'hours' && (value.hour() < offer.availableHours[0] || value.hour() > offer.availableHours[1])
+              }
+              skipDisabled={true}
+              ampm={false}
+              disablePast={true}
+              minutesStep={30}
+              shouldDisableDate={(day) =>
+                (!offer.availableDays.includes(index2day[day.day()]))
+              }
+            />
+          </Stack>
+        </LocalizationProvider>
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          disabled={value === null}
+        >
+          ΥΠΟΒΟΛΗ
+        </Button>
+    </Dialog>
+  )
+}
+
+function RequestDialog(props) {
+  const { onClose, open } = props;
+
+  const handleClose = () => {
+    onClose();
+  };
+
+  return (
+    <Dialog onClose={handleClose} open={open}>
+        <DialogTitle> Αίτημα Συνεργασίας </DialogTitle>
+    </Dialog>
+  )
+}
 
 const day2name = {
   "MON": "Δευτέρα",
@@ -16,7 +101,26 @@ const day2name = {
   "SUN": "Κυριακή"
 };
 
-function actions (offer, uid) {
+function Actions (offer, uid) {
+  const [openRendezvous, setOpenRendezvous] = React.useState(false);
+  const [openRequest, setOpenRequest] = React.useState(false);
+
+  const handleClickOpenRendezvous = () => {
+    setOpenRendezvous(true);
+  };
+
+  const handleCloseRendezvous = () => {
+    setOpenRendezvous(false);
+  };
+
+  const handleClickOpenRequest = () => {
+    setOpenRequest(true);
+  };
+
+  const handleCloseRequest = () => {
+    setOpenRequest(false);
+  };
+
   if (uid === 0) {
     return (
       <Box>
@@ -58,16 +162,30 @@ function actions (offer, uid) {
     <Box>
       <Button
         variant="contained"
+        onClick={handleClickOpenRendezvous}
         sx={{ m: 1 }}
+        disabled={Database.getRendezvous({uidFamily:uid, scheduledAfter:true}).length > 0}
       >
         ΡΑΝΤΕΒΟΥ
       </Button>
       <Button
         variant="outlined"
+        onClick={handleClickOpenRequest}
         sx={{ m: 1 }}
       >
         ΣΥΝΕΡΓΑΣΙΑ
       </Button>
+      <RendezvousDialog
+        open={openRendezvous}
+        onClose={handleCloseRendezvous}
+        offer={offer}
+        uidFamily={uid}
+      />
+      <RequestDialog
+        open={openRequest}
+        onClose={handleCloseRequest}
+        offer={offer}
+      />
     </Box>
   );
 }
@@ -79,7 +197,7 @@ export default function OfferBox({id, uid, additionalActions}) {
   return (
     <GrayBox
       title = "Αγγελία"
-      actions={<Box>{actions(offer, uid)} {additionalActions}</Box>}  
+      actions={<Box>{Actions(offer, uid)} {additionalActions}</Box>}  
     >
       <TableContainer>
         <Table>

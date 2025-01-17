@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import JsonDatabase from "../data.json";
 
 export function json_to_localstorage() {
@@ -246,6 +247,9 @@ export function getRendezvous (props) {
       ))
       && (props.scheduled === undefined || (
         item.scheduled === props.scheduled
+      ))
+      && (props.scheduledAfter === undefined || (
+        dayjs(item.scheduled).isAfter(dayjs())
       ))
   ))
 }
