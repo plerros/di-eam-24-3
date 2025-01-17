@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 import * as Database from "../../components/Database"
-import GrayBox from "../../components/GrayBox";
 
 function offersBox(uid, actions)
 {

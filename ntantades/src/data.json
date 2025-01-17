@@ -164,9 +164,9 @@
       "agreedHours" : [9, 17]
     },
     {
-      "id"        : 2,
-      "uidFamily" : 3,
-      "offerID"   : 2,
+      "id"          : 2,
+      "uidFamily"   : 3,
+      "offerID"     : 2,
       "agreedDays"  : ["MON", "TUE", "WED", "THU", "FRI"],
       "agreedHours" : [9, 17]
     }

@@ -124,7 +124,6 @@ export function getUsers (props) {
       item.role === props.role
     ))
   ))
-
 }
 
 export function setOffer (props) {
@@ -204,6 +203,81 @@ export function getOffers (props) {
   ))
 }
 
+export function setRendezvous (props) {
+  const Database = get();
+  if (props.id === undefined)
+    return false;
+
+  if (props.id > Database.rendezvous.length)
+    return false;
+
+  var id = props.id;
+  if (props.id < 0) {
+    id = Database.rendezvous.length;
+    Database.rendezvous.push({});
+    Database.rendezvous[id].id = id;
+  }
+
+  if (props.uidFamily !== undefined)
+    Database.rendezvous[id].uidFamily = props.uidFamily;
+  if (props.offerID !== undefined)
+    Database.rendezvous[id].offerID = props.offerID;
+  if (props.scheduled !== undefined)
+    Database.rendezvous[id].scheduled = props.scheduled;
+
+  set(Database);
+  return true;
+}
+
+export function getRendezvous (props) {
+  const Database = get();
+  return  (Database.requests.filter(item =>
+      (props.id === undefined || (
+        item.id === props.id
+      ))
+      && (props.notId === undefined || (
+        item.id !== props.notId
+      ))
+      && (props.uidFamily === undefined || (
+        item.uidFamily === props.uidFamily
+      ))
+      && (props.offerID === undefined || (
+        item.offerID === props.offerID
+      ))
+      && (props.scheduled === undefined || (
+        item.scheduled === props.scheduled
+      ))
+  ))
+}
+
+export function setRequest (props) {
+  const Database = get();
+  if (props.id === undefined)
+    return false;
+
+  if (props.id > Database.requests.length)
+    return false;
+
+  var id = props.id;
+  if (props.id < 0) {
+    id = Database.requests.length;
+    Database.requests.push({});
+    Database.requests[id].id = id;
+  }
+
+  if (props.uidFamily !== undefined)
+    Database.requests[id].uidFamily = props.uidFamily;
+  if (props.offerID !== undefined)
+    Database.requests[id].offerID = props.offerID;
+  if (props.agreedDays !== undefined)
+    Database.requests[id].agreedDays = props.agreedDays;
+  if (props.agreedHours !== undefined)
+    Database.requests[id].agreedHours = props.agreedHours;
+
+  set(Database);
+  return true;
+}
+
 export function getRequests (props) {
   const Database = get();
   return  (Database.requests.filter(item =>
@@ -216,6 +290,9 @@ export function getRequests (props) {
       && (props.uidFamily === undefined || (
           item.uidFamily === props.uidFamily
       ))
+      && (props.offerID === undefined || (
+          item.offerID === props.offerID
+      ))
       && (props.agreedDays === undefined || (
         item.agreedDays.isSubsetOf(props.agreedDays)
       ))
@@ -224,6 +301,34 @@ export function getRequests (props) {
         && (item.agreedHours[1] <= props.agreedHours[1])
       ))
   ))
+}
+
+export function setAgreement (props) {
+  const Database = get();
+  if (props.id === undefined)
+    return false;
+
+  if (props.id > Database.agreements.length)
+    return false;
+
+  var id = props.id;
+  if (props.id < 0) {
+    id = Database.agreements.length;
+    Database.agreements.push({});
+    Database.agreements[id].id = id;
+  }
+
+  if (props.requestID !== undefined)
+    Database.agreements[id].requestID = props.requestID;
+  if (props.begin !== undefined)
+    Database.agreements[id].begin = props.begin;
+  if (props.end !== undefined)
+    Database.agreements[id].end = props.end;
+  if (props.accepted !== undefined)
+    Database.agreements[id].accepted = props.accepted;
+
+  set(Database);
+  return true;
 }
 
 export function getAgreements (props) {
