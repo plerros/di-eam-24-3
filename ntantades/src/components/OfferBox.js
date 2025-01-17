@@ -1,7 +1,10 @@
-import { Box, Button } from "@mui/material";
-import {Link} from 'react-router-dom'
+import * as React from "react"
+
+import { Box, Button, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { Link } from 'react-router-dom'
 
 import * as Database from "./Database";
+import GrayBox from "./GrayBox";
 
 const day2name = {
   "MON": "Δευτέρα",
@@ -13,10 +16,10 @@ const day2name = {
   "SUN": "Κυριακή"
 };
 
-function actions (offer_uid, uid) {
+function actions (offer, uid) {
   if (uid === 0) {
     return (
-      <Box      >
+      <Box>
         <Button
           variant="contained"
           component={Link}
@@ -38,7 +41,7 @@ function actions (offer_uid, uid) {
   }
   const user = Database.getUser(uid);
   if (user.role === "Nanny") {
-    if (offer_uid === uid) {
+    if (offer.uidNanny === uid && offer.requestID === 0) {
       return (
         <Button
           variant="contained"
@@ -71,55 +74,51 @@ function actions (offer_uid, uid) {
 
 export default function OfferBox({id, uid}) {
   const offer = Database.getOffers({id:id})[0];
+  const published = new Date(Date.parse(offer.published));
 
   return (
-    <Box sx = {{
-      display: 'flex',
-      bgcolor: '#F0F0F0',
-      borderRadius: 1,
-      flexDirection: 'column',
-      p: 2,
-      gap: 2
-    }}>
-      <Box sx = {{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 2
-        }}
-      >
-        <Box flexGrow={1}>
-          <h1>Αγγελία</h1>
-        </Box>
-        {actions(offer.uidNanny, uid)}
-      </Box>
-      <Box sx = {{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 2
-        }}
-      >
-        <Box>Ώρες Εργασίας:</Box>
-        <Box>
-          {offer.availableHours[0]}
-          -
-          {offer.availableHours[1]}
-        </Box>
-      </Box>
-      <Box sx = {{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 2
-        }}
-      >
-        <Box>Ημέρες Εργασίας:</Box>
-        {
-          offer.availableDays.map((day) => (
-            <Box key={day}>
-              {day2name[day]}
-            </Box>
-          ))
-        }
-      </Box>
-    </Box>
+    <GrayBox
+      title = "Αγγελία"
+      actions={actions(offer, uid)}
+    >
+      <TableContainer>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell align="right" sx = {{ width: 1/4 }}>
+                  Ώρες Εργασίας:
+              </TableCell>
+              <TableCell align="left">
+                {offer.availableHours[0]}
+                -
+                {offer.availableHours[1]}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="right" sx = {{ width: 1/4 }}>
+                Ημέρες Εργασίας:
+              </TableCell>
+              <TableCell align="left" flexDirection = "row" sx={{display:"flex", gap: 1}}>
+                {
+                  offer.availableDays.map((day) => (
+                    <Box key={day}>
+                      {day2name[day]}
+                    </Box>
+                  ))
+                }
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="right" sx = {{ width: 1/4 }}>
+                Δημοσιεύτηκε:
+              </TableCell>
+              <TableCell align="left">
+                {published.toLocaleString()}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </GrayBox>
   );
 }

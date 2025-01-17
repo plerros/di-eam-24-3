@@ -2,8 +2,10 @@ import { Button, Container } from "@mui/material";
 import ProfileBox from "../../components/ProfileBox"
 import OfferBox from "../../components/OfferBox";
 import { Link } from 'react-router-dom'
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 import * as Database from "../../components/Database"
+import GrayBox from "../../components/GrayBox";
 
 function offersBox(uid)
 {
@@ -47,6 +49,8 @@ export default function Profile({uid}) {
       {
         offersBox(uid)
       }
+      <GrayBox title="Ιστορικό Αγγελιών" actions={<Button variant="contained" component={Link} to={"/nanny/offers"} sx={{background:'primary'}}><ArrowForwardIcon/></Button>}>
+      </GrayBox>
     </Container>
   );
 }
