@@ -7,7 +7,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import * as Database from "../../components/Database"
 import GrayBox from "../../components/GrayBox";
 
-function offersBox(uid)
+function offersBox(uid, actions)
 {
   var offers = Database.getOffers({uidNanny:uid*1, requestID:0});
   if (offers === null)
@@ -29,7 +29,7 @@ function offersBox(uid)
 
   return(
     offers.map((offer) => (
-      <OfferBox key={offer.id} id={offer.id} uid={uid}/>
+      <OfferBox key={offer.id} id={offer.id} uid={uid} additionalActions={actions}/>
     ))
   );
 }
@@ -47,10 +47,8 @@ export default function Profile({uid}) {
     >
       <ProfileBox uid={uid}/>
       {
-        offersBox(uid)
+        offersBox(uid, <Button variant="outlined" component={Link} to={"/nanny/offers"}> Ιστορικό <ArrowForwardIcon/></Button>)
       }
-      <GrayBox title="Ιστορικό Αγγελιών" actions={<Button variant="contained" component={Link} to={"/nanny/offers"} sx={{background:'primary'}}><ArrowForwardIcon/></Button>}>
-      </GrayBox>
     </Container>
   );
 }

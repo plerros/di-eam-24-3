@@ -72,14 +72,14 @@ function actions (offer, uid) {
   );
 }
 
-export default function OfferBox({id, uid}) {
+export default function OfferBox({id, uid, additionalActions}) {
   const offer = Database.getOffers({id:id})[0];
   const published = new Date(Date.parse(offer.published));
 
   return (
     <GrayBox
       title = "Αγγελία"
-      actions={actions(offer, uid)}
+      actions={<Box>{actions(offer, uid)} {additionalActions}</Box>}  
     >
       <TableContainer>
         <Table>
