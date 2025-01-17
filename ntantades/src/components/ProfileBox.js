@@ -1,6 +1,8 @@
 import { Avatar, Box, Button, Divider, Rating } from '@mui/material';
 import { Link } from 'react-router-dom';
 
+import GrayBox from "../components/GrayBox"
+
 import * as Database from "./Database";
 
 export default function ProfileBox({uid}) {
@@ -8,69 +10,57 @@ export default function ProfileBox({uid}) {
   const stars = Database.getStars(uid);
 
   return (
-    <Box
-    sx = {{
-      p: 2,
-      bgcolor: '#F0F0F0',
-      borderRadius: 2,
-      display:'flex',
-      flexDirection: 'column',
-      gap: 2
-    }}
-    >
-    <h1>
-      Προφίλ
-    </h1>
-    <Box
-      sx = {{
-        bgcolor: '#F0F0F0',
-        borderRadius: 2,
-        display:'flex',
-        flexDirection: 'row',
-        gap: 2
-      }}
-    >
-      <Box>
-        <Avatar alt={user.firstName} src={user.picture} 
-        sx = {{width: 100, height: 100}}/>
-      </Box>
+    <GrayBox title="Προφίλ">
       <Box
-        flexGrow={1}
         sx = {{
           bgcolor: '#F0F0F0',
           borderRadius: 2,
           display:'flex',
-          flexDirection: 'column',
+          flexDirection: 'row',
           gap: 2
         }}
       >
         <Box>
+          <Avatar alt={user.firstName} src={user.picture} 
+          sx = {{width: 100, height: 100}}/>
+        </Box>
+        <Box
+          flexGrow={1}
+          sx = {{
+            bgcolor: '#F0F0F0',
+            borderRadius: 2,
+            display:'flex',
+            flexDirection: 'column',
+            gap: 2
+          }}
+        >
           <Box>
-            {user.firstName}
-            {" "}
-            {user.lastName}
-            {" "}
-            {user.age}
+            <Box>
+              {user.firstName}
+              {" "}
+              {user.lastName}
+              {" "}
+              {user.age}
+            </Box>
+            <Box>
+              {user.gender}
+            </Box>
           </Box>
           <Box>
-            {user.gender}
+            {user.municipality}
           </Box>
         </Box>
-        <Box>
-          {user.municipality}
-        </Box>
+        <Button
+          component={Link}
+          to={"/users/" + uid + "/reviews"}
+        >
+          <Rating name="half-rating-read" value={stars} precision={0.5} readOnly />
+        </Button>
       </Box>
-      <Button
-        component={Link}
-        to={"/users/" + uid + "/reviews"}
-      >
-        <Rating name="half-rating-read" value={stars} precision={0.5} readOnly />
-      </Button>
-    </Box>
-    <Divider orientation="horizontal" flexItem />
-    <Box>
-      {user.description}
-    </Box>
-    </Box>
+      <Divider orientation="horizontal" flexItem />
+      <Box>
+        {user.description}
+      </Box>
+    </GrayBox>
   );
 }

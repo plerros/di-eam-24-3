@@ -1,9 +1,10 @@
 import * as React from "react"
-import { Box, Button, Checkbox, Divider, FormControl, FormControlLabel, FormHelperText, Grid2 } from "@mui/material";
+import { Button, Checkbox, Container, FormControl, FormControlLabel, FormHelperText, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import TimeRangeSlider from "../../components/TimeRangeSlider";
 import { Navigate } from "react-router-dom";
 
 import * as Database from "../../components/Database"
+import GrayBox from "../../components/GrayBox";
 
 const issueNone = {error:false, help:""};
 //const issueRequired = {error:true, help:"Υποχρεωτικό"};
@@ -319,12 +320,12 @@ export default function NewOffer({uid}) {
 
   React.useEffect(() =>
   {
-    console.log("check")
+    var now = new Date();
     if (state.submit === true) {
       Database.setOffer({
         id: -1,
         uidNanny: uid,
-        published: "?",
+        published: now.toISOString(),
         type: state.type,
         availableDays: state.availableDays,
         availableHours: state.availableHours,
@@ -336,313 +337,250 @@ export default function NewOffer({uid}) {
   }, [state, uid]);
 
   if (state.submit === true) {
-    console.log(Database.get().offers)
     return (
       <Navigate to="/nanny" />
     );
   }
 
   return (
-    <Box
-      component="form"
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
+    <Container
+      maxWidth="xl"
+      sx = {{
+        display:'flex',
         flexDirection: 'column',
-        '& > :not(style)': { width: '45ch' },
         gap: 2
       }}
-      noValidate
-      autoComplete="off"
     >
-      <Box>
-        <h1>Εργασία</h1>
-      </Box>
-      <Grid2
-        container
-        rowSpacing={2}
-        columnSpacing={{ xs: 1, sx: 1, mx: 1 }}
-        sx = {{
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
-        <Grid2 item size = {3}
-          sx = {{
-            display: 'flex',
-            justifyContent: "right"
-          }}
-        >
-          Απασχόληση:
-        </Grid2>
-        <Grid2 item size = {8} />
-        <Grid2
-          item
-          size = {3} 
-          sx = {{
-            display: 'flex',
-            justifyContent: "right"
-          }}
-        >
-        </Grid2>
-        <Grid2 item size = {8}>
-          <FormControl
-            error={state.typeIssue.error}
-            component="fieldset"
-            variant="standard"
-            required
-          >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.type === "FullTime" ? true : false}
-                  onChange={handleFullTime}
-                />
-              }
-              label="Πλήρης"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.type === "PartTime" ? true : false}
-                  onChange={handlePartTime}
-                />
-              }
-              label="Μερική"
-            />
-            <FormHelperText>
-              {state.typeIssue.help}
-            </FormHelperText>
-          </FormControl>
-        </Grid2>
+      <GrayBox title="Εργασία">
+        <TableContainer>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell align="right" sx = {{ width: 1/4 }}>
+                  Απασχόληση:
+                </TableCell>
+                <TableCell align="left">
+                  <FormControl
+                    error={state.typeIssue.error}
+                    component="fieldset"
+                    variant="standard"
+                    required
+                  >
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.type === "FullTime" ? true : false}
+                          onChange={handleFullTime}
+                        />
+                      }
+                      label="Πλήρης"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.type === "PartTime" ? true : false}
+                          onChange={handlePartTime}
+                        />
+                      }
+                      label="Μερική"
+                    />
+                    <FormHelperText>
+                      {state.typeIssue.help}
+                    </FormHelperText>
+                  </FormControl>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell align="right" sx = {{ width: 1/4 }}>
+                  Ώρες:
+                </TableCell>
+                <TableCell align="left">
+                  <TimeRangeSlider value={state.availableHours} setValue={handleAvailableHours} fulltime = {state.type === "FullTime"}/>
+                </TableCell>
+              </TableRow>
 
-        <Grid2
-          item
-          size = {3} 
-          sx = {{
-            display: 'flex',
-            justifyContent: "right"
-          }}
-        >
-          Ώρες:
-        </Grid2>
-        <Grid2 item size = {8} >
-          <TimeRangeSlider value={state.availableHours} setValue={handleAvailableHours} fulltime = {state.type === "FullTime"}/>
-        </Grid2>
-        <Grid2
-          item
-          size = {3} 
-          sx = {{
-            display: 'flex',
-            justifyContent: "right"
-          }}
-        >
-          Ημέρες:
-        </Grid2>
-        <Grid2 item size = {8} />
-        <Grid2
-          item
-          size = {3} 
-          sx = {{
-            display: 'flex',
-            justifyContent: "right"
-          }}
-        >
-        </Grid2>
-        <Grid2 item size = {8} >
-          <FormControl
-            error={state.availableDays.error}
-            component="fieldset"
-            variant="standard"
-            required
-          >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.availableDays.indexOf("MON") !== -1 ? true : false}
-                  onChange={handleAvailableMonday}
-                />
-              }
-              label="Δευτέρα"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.availableDays.indexOf("TUE") !== -1 ? true : false}
-                  onChange={handleAvailableTuesday}
-                />
-              }
-              label="Τρίτη"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.availableDays.indexOf("WED") !== -1 ? true : false}
-                  onChange={handleAvailableWednesday}
-                />
-              }
-              label="Τετάρτη"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.availableDays.indexOf("THU") !== -1 ? true : false}
-                  onChange={handleAvailableThursday}
-                />
-              }
-              label="Πέμπτη"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.availableDays.indexOf("FRI") !== -1 ? true : false}
-                  onChange={handleAvailableFriday}
-                />
-              }
-              label="Παρασκευή"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.availableDays.indexOf("SAT") !== -1 ? true : false}
-                  onChange={handleAvailableSaturday}
-                />
-              }
-              label="Σάββατο"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.availableDays.indexOf("SUN") !== -1 ? true : false}
-                  onChange={handleAvailableSunday}
-                />
-              }
-              label="Κυριακή"
-            />
-            <FormHelperText>
-              {state.typeIssue.help}
-            </FormHelperText>
-          </FormControl>
-        </Grid2>
-      </Grid2>
+              <TableRow>
+                <TableCell align="right" sx = {{ width: 1/4 }}>
+                  Ημέρες:
+                </TableCell>
+                <TableCell align="left">
+                  <FormControl
+                    error={state.availableDays.error}
+                    component="fieldset"
+                    variant="standard"
+                    required
+                  >
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.availableDays.indexOf("MON") !== -1 ? true : false}
+                          onChange={handleAvailableMonday}
+                        />
+                      }
+                      label="Δευτέρα"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.availableDays.indexOf("TUE") !== -1 ? true : false}
+                          onChange={handleAvailableTuesday}
+                        />
+                      }
+                      label="Τρίτη"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.availableDays.indexOf("WED") !== -1 ? true : false}
+                          onChange={handleAvailableWednesday}
+                        />
+                      }
+                      label="Τετάρτη"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.availableDays.indexOf("THU") !== -1 ? true : false}
+                          onChange={handleAvailableThursday}
+                        />
+                      }
+                      label="Πέμπτη"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.availableDays.indexOf("FRI") !== -1 ? true : false}
+                          onChange={handleAvailableFriday}
+                        />
+                      }
+                      label="Παρασκευή"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.availableDays.indexOf("SAT") !== -1 ? true : false}
+                          onChange={handleAvailableSaturday}
+                        />
+                      }
+                      label="Σάββατο"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.availableDays.indexOf("SUN") !== -1 ? true : false}
+                          onChange={handleAvailableSunday}
+                        />
+                      }
+                      label="Κυριακή"
+                    />
+                    <FormHelperText>
+                      {state.typeIssue.help}
+                    </FormHelperText>
+                  </FormControl>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </GrayBox>
+      <GrayBox title="Ραντεβού">
+        <TableContainer>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell align="right" sx = {{ width: 1/4 }}>
+                  Ώρες:
+                </TableCell>
+                <TableCell align="left">
+                  <TimeRangeSlider value={state.rendezvousHours} setValue={handleRendezvousHours} fulltime={true}/>
+                </TableCell>
+              </TableRow>
 
-      <Divider orientation="horizontal" />
-    
-      <Box> <h1>Ραντεβού</h1> </Box>
-      <Grid2
-        container
-        rowSpacing={2}
-        columnSpacing={{ xs: 1, sx: 1, mx: 1 }}
-        sx = {{
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
-        <Grid2 item size = {3}
-          sx = {{
-            display: 'flex',
-            justifyContent: "right"
-          }}
-        >
-          Ώρες:
-        </Grid2>
-        <Grid2 item size = {8}>
-          <TimeRangeSlider value={state.rendezvousHours} setValue={handleRendezvousHours} fulltime={true}/>
-        </Grid2>
-        <Grid2 item size = {3}
-          sx = {{
-            display: 'flex',
-            justifyContent: "right"
-          }}
-        >
-          Ημέρες:
-        </Grid2>
-        <Grid2 item size = {8}/>
-        <Grid2 item size = {3}
-          sx = {{
-            display: 'flex',
-            justifyContent: "right"
-          }}
-        >
-        </Grid2>
-        <Grid2 item size = {8}>
-          <FormControl
-            error={state.rendezvousDays.error}
-            component="fieldset"
-            variant="standard"
-            required
-          >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.rendezvousDays.indexOf("MON") !== -1 ? true : false}
-                  onChange={handleRendezvousMonday}
-                />
-              }
-              label="Δευτέρα"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.rendezvousDays.indexOf("TUE") !== -1 ? true : false}
-                  onChange={handleRendezvousTuesday}
-                />
-              }
-              label="Τρίτη"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.rendezvousDays.indexOf("WED") !== -1 ? true : false}
-                  onChange={handleRendezvousWednesday}
-                />
-              }
-              label="Τετάρτη"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.rendezvousDays.indexOf("THU") !== -1 ? true : false}
-                  onChange={handleRendezvousThursday}
-                />
-              }
-              label="Πέμπτη"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.rendezvousDays.indexOf("FRI") !== -1 ? true : false}
-                  onChange={handleRendezvousFriday}
-                />
-              }
-              label="Παρασκευή"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.rendezvousDays.indexOf("SAT") !== -1 ? true : false}
-                  onChange={handleRendezvousSaturday}
-                />
-              }
-              label="Σάββατο"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.rendezvousDays.indexOf("SUN") !== -1 ? true : false}
-                  onChange={handleRendezvousSunday}
-                />
-              }
-              label="Κυριακή"
-            />
-            <FormHelperText>
-              {state.typeIssue.help}
-            </FormHelperText>
-          </FormControl>
-        </Grid2>
-      </Grid2>
-
-      <Divider orientation="horizontal" />
+              <TableRow>
+                <TableCell align="right" sx = {{ width: 1/4 }}>
+                  Ημέρες:
+                </TableCell>
+                <TableCell align="left">
+                  <FormControl
+                    error={state.rendezvousDays.error}
+                    component="fieldset"
+                    variant="standard"
+                    required
+                  >
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.rendezvousDays.indexOf("MON") !== -1 ? true : false}
+                          onChange={handleRendezvousMonday}
+                        />
+                      }
+                      label="Δευτέρα"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.rendezvousDays.indexOf("TUE") !== -1 ? true : false}
+                          onChange={handleRendezvousTuesday}
+                        />
+                      }
+                      label="Τρίτη"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.rendezvousDays.indexOf("WED") !== -1 ? true : false}
+                          onChange={handleRendezvousWednesday}
+                        />
+                      }
+                      label="Τετάρτη"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.rendezvousDays.indexOf("THU") !== -1 ? true : false}
+                          onChange={handleRendezvousThursday}
+                        />
+                      }
+                      label="Πέμπτη"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.rendezvousDays.indexOf("FRI") !== -1 ? true : false}
+                          onChange={handleRendezvousFriday}
+                        />
+                      }
+                      label="Παρασκευή"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.rendezvousDays.indexOf("SAT") !== -1 ? true : false}
+                          onChange={handleRendezvousSaturday}
+                        />
+                      }
+                      label="Σάββατο"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.rendezvousDays.indexOf("SUN") !== -1 ? true : false}
+                          onChange={handleRendezvousSunday}
+                        />
+                      }
+                      label="Κυριακή"
+                    />
+                    <FormHelperText>
+                      {state.typeIssue.help}
+                    </FormHelperText>
+                  </FormControl>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </GrayBox>
 
       <Button
         variant="contained"
@@ -651,6 +589,6 @@ export default function NewOffer({uid}) {
       >
         ΥΠΟΒΟΛΗ
       </Button>
-    </Box>
-  );
+    </Container>
+  )
 }
