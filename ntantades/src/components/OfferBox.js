@@ -40,7 +40,7 @@ function RendezvousDialog({ onClose, open, offer, uidFamily }) {
         scheduled: value.toISOString()
       })
     }
-  }, [submit]);
+  }, [submit, uidFamily, offer.id, value]);
 
   return (
     <Dialog onClose={handleClose} open={open}>
