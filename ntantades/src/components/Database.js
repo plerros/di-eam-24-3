@@ -231,7 +231,7 @@ export function setRendezvous (props) {
 
 export function getRendezvous (props) {
   const Database = get();
-  return  (Database.requests.filter(item =>
+  return  (Database.rendezvous.filter(item =>
       (props.id === undefined || (
         item.id === props.id
       ))
