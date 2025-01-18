@@ -6,7 +6,6 @@ import * as Database from "./Database"
 import { Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 
 export default function RendezvousBox({id, uid, title}) {
-  console.log()
   const rendezvous_list = Database.getRendezvous({id:id, scheduledAfter:true});
   if (rendezvous_list.length === 0)
     return ([]);

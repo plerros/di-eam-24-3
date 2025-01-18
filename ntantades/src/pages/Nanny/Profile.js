@@ -48,7 +48,6 @@ function rendezvousBoxCalendar (uid)
   if (rendezvous === null)
     rendezvous = [];
 
-  console.log(offers);
   if (rendezvous.length === 0)
     return([]);
 
