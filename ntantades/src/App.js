@@ -96,7 +96,7 @@ export default function App() {
           <Route path="agreements" element={<NannyAgreements />} />
           <Route path="newoffer"   element={<NannyNewOffer uid={uid} />} />
           <Route path="offers"     element={<NannyOffers uid={uid} />} />
-          <Route path="rendezvous" element={<NannyRendezvous />} />
+          <Route path="rendezvous" element={<NannyRendezvous uid={uid}/>} />
           <Route path="requests"   element={<NannyRequests />} />
         </Route>
 
