@@ -55,6 +55,7 @@ export default function App() {
   }
 
   const [redirect, setRedirect] = React.useState(["/", "/"]);
+  const [searchMunicipality, setSearchMunicipality] = React.useState(null);
 
   Database.json_to_localstorage();
   return (
@@ -64,8 +65,8 @@ export default function App() {
       />
       <Breadcrumb/>
       <Routes>
-        <Route index element={<Home />} />
-        <Route path="search" element={<Search />} />
+        <Route index element={<Home municipality={searchMunicipality} setMunicipality={setSearchMunicipality} />} />
+        <Route path="search" element={<Search  municipality={searchMunicipality} setMunicipality={setSearchMunicipality} />} />
         <Route path="becomenanny" element={<BecomeNanny setRedirect={setRedirect}/>} />
         <Route path="help" element={<Help />} />
         <Route path="redirect" element={<Redirect redirect={redirect} setRedirect={setRedirect} />} />

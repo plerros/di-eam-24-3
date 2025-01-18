@@ -1,21 +1,18 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
-import { Box, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+import { Autocomplete, Box, Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
 import Divider from '@mui/material/Divider';
 
 import NannyBox from "../components/NannyBox";
 import TimeRangeSlider from '../components/TimeRangeSlider';
-import InputSelect from '../components/InputSelect.js'
 
 import * as Database from "../components/Database.js"
 import municipalities from '../municipalities.json'
 
-export default function Search() {
+export default function Search({municipality, setMunicipality}) {
   const [fullTime, setFullTime] = React.useState(true);
   const [partTime, setPartTime] = React.useState(false);
   const [hours, setHours] = React.useState([9, 17]);
-  const [municipality, setMunicipality] = React.useState(municipalities[13]);
-
 
   const [monday,    setMonday]    = React.useState(true);
   const [tuesday,   setTuesday]   = React.useState(true);
@@ -109,16 +106,18 @@ export default function Search() {
             gap: 2
           }}
         >
-          <Box>
-            <InputSelect
-              label={"Δήμος"}
-              required={true}
-              value={municipality}
-              setValue={setMunicipality}
-              issue={{error:false, help:""}}
-              options={municipalities}
-            />
-          </Box>
+          <Autocomplete
+            required={true}
+            value={municipality}
+            setValue={setMunicipality}
+            onChange={(event, newValue) => {
+              setMunicipality(newValue)
+            }}
+            issue={{error:false, help:""}}
+            disablePortal
+            options={municipalities}
+            renderInput={(params) => <TextField {...params} label="Δήμος" />}
+          />
           <Divider orientation="horizontal" flexItem />
           <Box>
             Απασχόληση:
