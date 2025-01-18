@@ -1,5 +1,6 @@
 import { Avatar, Box, Rating } from "@mui/material";
 import * as Database from "./Database";
+import GrayBox from "./GrayBox";
 
 export default function Reviews({id}) {
   const review = Database.getReviews({id:id})[0];
@@ -8,14 +9,7 @@ export default function Reviews({id}) {
   const reviewer = Database.getUser(request.uidFamily);
   
   return (
-    <Box sx = {{
-      display: 'flex',
-      bgcolor: '#F0F0F0',
-      borderRadius: 1,
-      flexDirection: 'column',
-      p: 2,
-      gap: 2
-    }}>
+    <GrayBox>
       <Box
         sx = {{
           display: 'flex',
@@ -45,6 +39,6 @@ export default function Reviews({id}) {
       <Box>
         {review.text}
       </Box>
-    </Box>
+    </GrayBox>
   );
 }

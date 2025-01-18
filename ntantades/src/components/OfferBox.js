@@ -6,8 +6,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-import * as Database from "./Database";
 import GrayBox from "./GrayBox";
+import RendezvousBox from "../pages/RendezvousBox";
+
+import * as Database from "./Database";
 
 const index2day = [
   "MON",
@@ -41,7 +43,16 @@ function RendezvousDialog({ onClose, open, offer, uidFamily }) {
       })
     }
   }, [submit, uidFamily, offer.id, value]);
+  const rendezvous_list = Database.getRendezvous({uidFamily:uidFamily, scheduledAfter:true, offerID:offer.id})
+  const rendezvous = (rendezvous_list.length > 0) ? rendezvous_list[0] : null;
 
+  if (rendezvous !== null) {
+    return (
+      <Dialog onClose={handleClose} open={open}>
+        <RendezvousBox id={rendezvous.id}/>
+      </Dialog>
+    )
+}
   return (
     <Dialog onClose={handleClose} open={open}>
         <DialogTitle> Προγραμματισμός Ραντεβού </DialogTitle>
@@ -164,7 +175,6 @@ function Actions (offer, uid) {
         variant="contained"
         onClick={handleClickOpenRendezvous}
         sx={{ m: 1 }}
-        disabled={Database.getRendezvous({uidFamily:uid, scheduledAfter:true}).length > 0}
       >
         ΡΑΝΤΕΒΟΥ
       </Button>
