@@ -9,7 +9,7 @@ import RendezvousBox from "../../components/RendezvousBox";
 
 import * as Database from "../../components/Database"
 
-function rendezvousBoxCalendar (uid)
+function rendezvousOverview (uid)
 {
   var rendezvous = Database.getRendezvous({uidFamily:uid});
   if (rendezvous === null)
@@ -21,21 +21,7 @@ function rendezvousBoxCalendar (uid)
   rendezvous.reverse()
 
   return (
-    <GrayBox title="Ραντεβού" actions={<Button variant="contained" component={Link} to={"/nanny/rendezvous"}> <ArrowForwardIcon/></Button>}>
-      <Box
-        flexDirection = "row"
-        sx = {{
-          display:"flex"
-        }}
-      >
-        <Box
-          flexGrow={1}
-        >
-          <RendezvousBox id={rendezvous[0].id} uid={uid} title={"Επόμενο"}/>
-        </Box>
-        <Calendar uid={uid}/>
-      </Box>
-    </GrayBox>
+    <RendezvousBox id={rendezvous[0].id} uid={uid} title={"Επόμενο"}/>
   );
 }
 
@@ -50,9 +36,21 @@ export default function Profile({uid}) {
       }}
     >
       <ProfileBox uid={uid}/>
-      {
-        rendezvousBoxCalendar(uid)
-      }
+      <GrayBox title="Ραντεβού" actions={<Button variant="contained" component={Link} to={"/nanny/rendezvous"}> <ArrowForwardIcon/></Button>}>
+        <Box
+          flexDirection = "row"
+          sx = {{
+            display:"flex"
+          }}
+        >
+          <Box
+            flexGrow={1}
+          >
+            {rendezvousOverview(uid)}
+          </Box>
+          <Calendar uid={uid}/>
+        </Box>
+      </GrayBox>
     </Container>
   );
 }

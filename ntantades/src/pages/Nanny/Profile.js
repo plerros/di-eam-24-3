@@ -36,7 +36,7 @@ function offersBox(uid, actions)
   );
 }
 
-function rendezvousBoxCalendar (uid)
+function rendezvousOverview (uid)
 {
   var offers = Database.getOffers({uidNanny:uid*1, requestID:0});
   if (offers === null)
@@ -54,21 +54,7 @@ function rendezvousBoxCalendar (uid)
   rendezvous.reverse()
 
   return (
-    <GrayBox title="Ραντεβού" actions={<Button variant="contained" component={Link} to={"/nanny/rendezvous"}> <ArrowForwardIcon/></Button>}>
-      <Box
-        flexDirection = "row"
-        sx = {{
-          display:"flex"
-        }}
-      >
-        <Box
-          flexGrow={1}
-        >
-          <RendezvousBox id={rendezvous[0].id} uid={uid} title={"Επόμενο"}/>
-        </Box>
-        <Calendar uid={uid}/>
-      </Box>
-    </GrayBox>
+    <RendezvousBox id={rendezvous[0].id} uid={uid} title={"Επόμενο"}/>    
   );
 }
 
@@ -87,9 +73,19 @@ export default function Profile({uid}) {
       {
         offersBox(uid, <Button variant="outlined" component={Link} to={"/nanny/offers"}> ΙΣΤΟΡΙΚΟ <ArrowForwardIcon/></Button>)
       }
-      {
-        rendezvousBoxCalendar(uid)
-      }
+      <GrayBox title="Ραντεβού" actions={<Button variant="contained" component={Link} to={"/nanny/rendezvous"}> <ArrowForwardIcon/></Button>}>
+        <Box
+          flexDirection = "row"
+          sx = {{
+            display:"flex"
+          }}
+        >
+          <Box flexGrow={1} >
+            {rendezvousOverview(uid)}
+          </Box>
+          <Calendar uid={uid}/>
+        </Box>
+      </GrayBox>
     </Container>
   );
 }
