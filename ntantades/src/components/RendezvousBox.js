@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
 
-import GrayBox from "../components/GrayBox";
+import GrayBox from "./GrayBox";
 
-import * as Database from "../components/Database"
-import { Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
+import * as Database from "./Database"
+import { Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 
-export default function RendezvousBox({id, uid}) {
+export default function RendezvousBox({id, uid, title}) {
   console.log()
   const rendezvous_list = Database.getRendezvous({id:id, scheduledAfter:true});
   if (rendezvous_list.length === 0)
@@ -25,7 +25,7 @@ export default function RendezvousBox({id, uid}) {
   ) : (
     <TableRow>
       <TableCell align="right" sx = {{ width: 1/4 }}>
-        Με οικογένεια:
+        Με Οικογένεια:
       </TableCell>
       <TableCell align="left"
         component={Link}
@@ -44,7 +44,7 @@ export default function RendezvousBox({id, uid}) {
   ) : (
     <TableRow>
       <TableCell align="right" sx = {{ width: 1/4 }}>
-        Με νταντά:
+        Με Νταντά:
       </TableCell>
       <TableCell align="left"
         component={Link}
@@ -58,7 +58,7 @@ export default function RendezvousBox({id, uid}) {
   )
   
   return (
-    <GrayBox title="Προγραμματισμένο Ραντεβου">
+    <GrayBox title={(title) ? null : "Ραντεβου"} subtitle={title}>
       <TableContainer>
         <Table>
           <TableBody>

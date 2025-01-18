@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 
-export default function GrayBox({title, actions, children}) {
-  if (title || actions) {
+export default function GrayBox({title, subtitle, actions, children}) {
+  if (title || subtitle || actions) {
     return (
       <Box
         sx = {{
@@ -22,6 +22,7 @@ export default function GrayBox({title, actions, children}) {
         >
           <Box flexGrow={1}>
             <h1>{title}</h1>
+            <h3>{subtitle}</h3>
           </Box>
           {actions}
         </Box>

@@ -7,7 +7,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 import GrayBox from "./GrayBox";
-import RendezvousBox from "../pages/RendezvousBox";
+import RendezvousBox from "./RendezvousBox";
 
 import * as Database from "./Database";
 
