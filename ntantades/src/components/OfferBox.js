@@ -49,7 +49,7 @@ function RendezvousDialog({ onClose, open, offer, uidFamily }) {
   if (rendezvous !== null) {
     return (
       <Dialog onClose={handleClose} open={open}>
-        <RendezvousBox id={rendezvous.id}/>
+        <RendezvousBox id={rendezvous.id} uid={uidFamily}/>
       </Dialog>
     )
 }
