@@ -44,12 +44,12 @@ function rendezvousOverview (uid)
   if (offers.length === 0)
     return([]);
 
-  var rendezvous = Database.getRendezvous({offerID:offers[0].id});
+  var rendezvous = Database.getRendezvous({offerID:offers[0].id, scheduledAfter:true});
   if (rendezvous === null)
     rendezvous = [];
 
   if (rendezvous.length === 0)
-    return([]);
+    return("Δεν υπάρχουν ραντεβού");
 
   rendezvous.reverse()
 
@@ -85,6 +85,12 @@ export default function Profile({uid}) {
           </Box>
           <Calendar uid={uid}/>
         </Box>
+      </GrayBox>
+      <GrayBox title="Αιτήσεις Συνεργασίας" actions={<Button variant="contained" component={Link} to={"/nanny/requests"}> <ArrowForwardIcon/></Button>}>
+
+      </GrayBox>
+      <GrayBox title="Συμφωνητικά" actions={<Button variant="contained" component={Link} to={"/nanny/agreements"}> <ArrowForwardIcon/></Button>}>
+
       </GrayBox>
     </Container>
   );

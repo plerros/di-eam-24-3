@@ -11,13 +11,14 @@ import * as Database from "../../components/Database"
 
 function rendezvousOverview (uid)
 {
-  var rendezvous = Database.getRendezvous({uidFamily:uid});
+  var rendezvous = Database.getRendezvous({uidFamily:uid, scheduledAfter:true});
   if (rendezvous === null)
     rendezvous = [];
 
   if (rendezvous.length === 0)
-    return([]);
+    return("Δεν υπάρχουν ραντεβού");
 
+  console.log(rendezvous)
   rendezvous.reverse()
 
   return (
@@ -36,7 +37,7 @@ export default function Profile({uid}) {
       }}
     >
       <ProfileBox uid={uid}/>
-      <GrayBox title="Ραντεβού" actions={<Button variant="contained" component={Link} to={"/nanny/rendezvous"}> <ArrowForwardIcon/></Button>}>
+      <GrayBox title="Ραντεβού" actions={<Button variant="contained" component={Link} to={"/family/rendezvous"}> <ArrowForwardIcon/></Button>}>
         <Box
           flexDirection = "row"
           sx = {{
@@ -50,6 +51,12 @@ export default function Profile({uid}) {
           </Box>
           <Calendar uid={uid}/>
         </Box>
+      </GrayBox>
+      <GrayBox title="Αιτήσεις Συνεργασίας" actions={<Button variant="contained" component={Link} to={"/family/requests"}> <ArrowForwardIcon/></Button>}>
+
+      </GrayBox>
+      <GrayBox title="Συμφωνητικά" actions={<Button variant="contained" component={Link} to={"/family/agreements"}> <ArrowForwardIcon/></Button>}>
+
       </GrayBox>
     </Container>
   );
