@@ -1,86 +1,40 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
-import { Autocomplete, Box, Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
+import { Box } from '@mui/material';
 import Divider from '@mui/material/Divider';
 
 import NannyBox from "../components/NannyBox";
-import TimeRangeSlider from '../components/TimeRangeSlider';
 
 import * as Database from "../components/Database.js"
-import municipalities from '../municipalities.json'
+import LookingForControls from '../components/LookingForControls.js';
 
-export default function Search({municipality, setMunicipality}) {
-  const [fullTime, setFullTime] = React.useState(true);
-  const [partTime, setPartTime] = React.useState(false);
-  const [hours, setHours] = React.useState([9, 17]);
-
-  const [monday,    setMonday]    = React.useState(true);
-  const [tuesday,   setTuesday]   = React.useState(true);
-  const [wednesday, setWednesday] = React.useState(true);
-  const [thursday,  setThursday]  = React.useState(true);
-  const [friday,    setFriday]    = React.useState(true);
-  const [saturday,  setSaturday]  = React.useState(false);
-  const [sunday,    setSunday]   = React.useState(false);
-
-  const handleFullTime = () => {
-    if (fullTime === true)
-      setPartTime(true);
-    setFullTime(!fullTime);
-  };
-
-  const handlePartTime = () => {
-    if (partTime === true)
-      setFullTime(true);
-    setPartTime(!partTime);
-  };
-
-  const handleMonday = () => {
-    setMonday(!monday);
-  };
-  const handleTuesday = () => {
-    setTuesday(!tuesday);
-  };
-  const handleWednesday = () => {
-    setWednesday(!wednesday);
-  };
-  const handlethursday = () => {
-    setThursday(!thursday);
-  };
-  const handleFriday = () => {
-    setFriday(!friday);
-  };
-  const handleSaturday = () => {
-    setSaturday(!saturday);
-  };
-  const handleSunday = () => {
-    setSunday(!sunday);
-  };
+export default function Search({lookingFor_state, lookingFor_dispatch}) {
 
   var daysArray = [];
-  if (monday)
+  if (lookingFor_state.monday)
       daysArray.push("MON")
-  if (tuesday)
+  if (lookingFor_state.tuesday)
     daysArray.push("TUE")
-  if (thursday)
+  if (lookingFor_state.thursday)
       daysArray.push("THU")
-  if (wednesday)
+  if (lookingFor_state.wednesday)
       daysArray.push("WED")
-  if (friday)
+  if (lookingFor_state.friday)
       daysArray.push("FRI")
-  if (saturday)
+  if (lookingFor_state.saturday)
       daysArray.push("SAT")
-  if (sunday)
+  if (lookingFor_state.sunday)
       daysArray.push("SUN")
   
   const filteredOffers = Database.getOffers({
     notId: 0,
     availableDays: daysArray,
-    availableHours: hours,
+    availableHours: lookingFor_state.hours,
     requestID: 0
   });
 
   const nanniesWithOffer = filteredOffers.map((item) => (item.uidNanny));
-  const filteredNannies = Database.getUsers({listUserID: nanniesWithOffer, municipality: municipality});
+  const filteredNannies = Database.getUsers({listUserID: nanniesWithOffer, municipality: lookingFor_state.municipality});
 
   return (
     <Container
@@ -99,97 +53,10 @@ export default function Search({municipality, setMunicipality}) {
           gap: 5
         }}
       >
-        <Box
-          sx={{
-            display:'flex',
-            flexDirection: 'column',
-            gap: 2
-          }}
-        >
-          <Autocomplete
-            required={true}
-            value={municipality}
-            setValue={setMunicipality}
-            onChange={(event, newValue) => {
-              setMunicipality(newValue)
-            }}
-            issue={{error:false, help:""}}
-            disablePortal
-            options={municipalities}
-            renderInput={(params) => <TextField {...params} label="Δήμος" />}
-          />
-          <Divider orientation="horizontal" flexItem />
-          <Box>
-            Απασχόληση:
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox checked={fullTime} onChange={handleFullTime}/>
-                }
-                label="Πλήρης"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox checked={partTime} onChange={handlePartTime}/>
-                }
-                label="Μερική"
-              />
-            </FormGroup>
-          </Box>
-          <Divider orientation="horizontal" flexItem />
-          <Box>
-            Ώρες Εργασίας:
-            <TimeRangeSlider value={hours} setValue={setHours} fulltime = {fullTime}/>
-          </Box>
-          <Divider orientation="horizontal" flexItem />
-          <Box>
-            Ημέρες Εργασίας:
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox checked={monday} onChange={handleMonday}/>
-                }
-                label="Δευτέρα"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox checked={tuesday} onChange={handleTuesday}/>
-                }
-                label="Τρίτη"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox checked={wednesday} onChange={handleWednesday}/>
-                }
-                label="Τετάρτη"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox checked={thursday} onChange={handlethursday}/>
-                }
-                label="Πέμπτη"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox checked={friday} onChange={handleFriday}/>
-                }
-                label="Παρασκευή"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox checked={saturday} onChange={handleSaturday}/>
-                }
-                label="Σάββατο"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox checked={sunday} onChange={handleSunday}/>
-                }
-                label="Κυριακή"
-              />
-            </FormGroup>
-          </Box>
-        </Box>
+        <LookingForControls
+          lookingFor_state={lookingFor_state}
+          lookingFor_dispatch={lookingFor_dispatch}
+        />
         <Divider orientation="vertical" flexItem />
         <Box flexGrow="1" sx= {{ display:'flex', flexDirection: 'column', gap: 2 }}>
           {filteredNannies.map((user) => (

@@ -9,6 +9,7 @@ import Calendar from "../../components/Calendar";
 import RendezvousBox from "../../components/RendezvousBox";
 
 import * as Database from "../../components/Database"
+import RequestBox from "../../components/RequestBox";
 
 function offersBox(uid, actions)
 {
@@ -58,6 +59,28 @@ function rendezvousOverview (uid)
   );
 }
 
+function requestOverview (uid)
+{
+  var offers = Database.getOffers({uidNanny:uid*1, requestID:0});
+  if (offers === null)
+    offers = [];
+  if (offers.length === 0)
+    return([]);
+
+  var requests = Database.getRequests({offerID:offers[0].id});
+  if (requests === null)
+    requests = [];
+
+  if (requests.length === 0)
+    return("Δεν υπάρχουν αιτήσεις συνεργασίας");
+
+  requests.reverse()
+
+  return (
+    <RequestBox id={requests[0].id} uid={uid} title={"Πιο πρόσφατη"}/>    
+  );
+}
+
 export default function Profile({uid}) {
 
   return (
@@ -87,7 +110,7 @@ export default function Profile({uid}) {
         </Box>
       </GrayBox>
       <GrayBox title="Αιτήσεις Συνεργασίας" actions={<Button variant="contained" component={Link} to={"/nanny/requests"}> <ArrowForwardIcon/></Button>}>
-
+          {requestOverview(uid)}
       </GrayBox>
       <GrayBox title="Συμφωνητικά" actions={<Button variant="contained" component={Link} to={"/nanny/agreements"}> <ArrowForwardIcon/></Button>}>
 

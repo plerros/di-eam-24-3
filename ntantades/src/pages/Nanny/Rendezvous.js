@@ -7,7 +7,7 @@ export default function Rendezvous({uid}) {
   var offers = Database.getOffers({uidNanny:uid*1, requestID:0});
 
   
-  var rendezvous = Database.getRendezvous({offerUD:offers[0]});
+  var rendezvous = Database.getRendezvous({offerID:offers[0].id});
   if (rendezvous === null)
     rendezvous = [];
 

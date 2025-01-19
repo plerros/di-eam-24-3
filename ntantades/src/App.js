@@ -36,6 +36,179 @@ import NoPage from "./pages/NoPage";
 
 import * as Database from "./components/Database";
 
+const issueNone = {error:false, help:""};
+
+function LSgetItemSafe(item, defaultVal)
+{
+  const result = localStorage.getItem(item);
+  return (result === null) ? defaultVal : result;
+}
+
+function LSgetParseSafe(item, defaultVal)
+{
+  const result = JSON.parse(localStorage.getItem(item));
+  return (result === null) ? defaultVal : result;
+}
+
+const initialize_lookingFor = {
+  municipality      : LSgetItemSafe('lookingForMunicipality', null),
+  municipalityIssue : issueNone,
+
+  fullTime          : LSgetItemSafe('lookingForFullTime', true),
+  fullTimeIssue     : issueNone,
+
+  partTime          : LSgetItemSafe('lookingForPartTime', false),
+  partTimeIssue     : issueNone,
+
+  hours             : LSgetParseSafe('lookingForHours', [9,17]),
+  hoursIssue        : issueNone,
+
+  monday            : LSgetItemSafe('lookingForMonday', true),
+  mondayIssue       : issueNone,
+
+  tuesday           : LSgetItemSafe('lookingForTuesday', true),
+  tuesdayIssue      : issueNone,
+
+  wednesday         : LSgetItemSafe('lookingForWednesday', true),
+  wednesdayIssue    : issueNone,
+
+  thursday          : LSgetItemSafe('lookingForThursday', true),
+  thursdayIssue     : issueNone,
+
+  friday            : LSgetItemSafe('lookingForFriday', true),
+  fridayIssue       : issueNone,
+
+  saturday          : LSgetItemSafe('lookingForSaturday', true),
+  saturdayIssue     : issueNone,
+
+  sunday            : LSgetItemSafe('lookingForSunday', false),
+  sundayIssue       : issueNone,
+}
+
+function reduce_lookingFor(state, action) {
+  switch (action.type) {
+    case 'changed_municipality': {
+      localStorage.setItem('lookingForMunicipality', action.nextMunicipality);
+      return {
+        ...state,
+        municipality: action.nextMunicipality,
+        municipalityIssue: issueNone
+      }
+    }
+    case 'toggled_fullTime': {
+      const value = !(state.fullTime)
+      if (state.fullTime === true) {
+        localStorage.setItem('lookingForPartTime', true);
+        localStorage.setItem('lookingForFullTime', value);
+        return {
+          ...state,
+          partTime: true,
+          partTimeIssue: issueNone,
+          fullTime: value,
+          fullTimeIssue: issueNone
+        }
+      }
+      return {
+        ...state,
+        fullTime: value,
+        fullTimeIssue: issueNone
+      }
+    }
+    case 'toggled_partTime': {
+      const value = !(state.partTime)
+      if (state.partTime === true) {
+        localStorage.setItem('lookingForFullTime', true);
+        localStorage.setItem('lookingForPartTime', value);
+        return {
+          ...state,
+          fullTime: true,
+          fullTimeIssue: issueNone,
+          partTime: value,
+          partTimeIssue: issueNone
+        }
+      }
+      return {
+        ...state,
+        partTime: value,
+        partTimeIssue: issueNone
+      }
+    }
+    case 'changed_hours': {
+      localStorage.setItem('lookingForHours', JSON.stringify(action.nextHours));
+      return {
+        ...state,
+        hours: action.nextHours,
+        hoursIssue: issueNone
+      }
+    }
+    case 'toggled_monday': {
+      const value = !(state.monday);
+      localStorage.setItem('lookingForMonday', value);
+      return {
+        ...state,
+        monday: value,
+        mondayIssue: issueNone
+      }
+    }
+    case 'toggled_tuesday': {
+      const value = !(state.tuesday);
+      localStorage.setItem('lookingForTuesday', value);
+      return {
+        ...state,
+        tuesday: value,
+        tuesdayIssue: issueNone
+      }
+    }
+    case 'toggled_wednesday': {
+      const value = !(state.wednesday);
+      localStorage.setItem('lookingForWednesday', value);
+      return {
+        ...state,
+        wednesday: value,
+        wednesdayIssue: issueNone
+      }
+    }
+    case 'toggled_thursday': {
+      const value = !(state.thursday);
+      localStorage.setItem('lookingForThursday', value);
+      return {
+        ...state,
+        thursday: value,
+        thursdayIssue: issueNone
+      }
+    }
+    case 'toggled_friday': {
+      const value = !(state.friday);
+      localStorage.setItem('lookingForFriday', value);
+      return {
+        ...state,
+        friday: value,
+        fridayIssue: issueNone
+      }
+    }
+    case 'toggled_saturday': {
+      const value = !(state.saturday);
+      localStorage.setItem('lookingForSaturday', value);
+      return {
+        ...state,
+        saturday: value,
+        saturdayIssue: issueNone
+      }
+    }
+    case 'toggled_sunday': {
+      const value = !(state.sunday);
+      localStorage.setItem('lookingForSunday', value);
+      return {
+        ...state,
+        sunday: value,
+        sundayIssue: issueNone
+      }
+    }
+    default: {}
+  }
+  throw Error('Unknown action: ' + action.type);
+}
+
 const PrivateFamily = ({uid}) => {
   const user = Database.getUser(uid);
   return (user.role === "Family") ? <Outlet /> : <Navigate to="/nopage" />;
@@ -55,7 +228,7 @@ export default function App() {
   }
 
   const [redirect, setRedirect] = React.useState(["/", "/"]);
-  const [searchMunicipality, setSearchMunicipality] = React.useState(null);
+  const [lookingFor_state, lookingFor_dispatch] = React.useReducer(reduce_lookingFor, initialize_lookingFor);
 
   Database.json_to_localstorage();
   return (
@@ -65,8 +238,8 @@ export default function App() {
       />
       <Breadcrumb/>
       <Routes>
-        <Route index element={<Home municipality={searchMunicipality} setMunicipality={setSearchMunicipality} />} />
-        <Route path="search" element={<Search  municipality={searchMunicipality} setMunicipality={setSearchMunicipality} />} />
+        <Route index element={<Home lookingFor_state={lookingFor_state} lookingFor_dispatch={lookingFor_dispatch} />} />
+        <Route path="search" element={<Search  lookingFor_state={lookingFor_state} lookingFor_dispatch={lookingFor_dispatch}/>} />
         <Route path="becomenanny" element={<BecomeNanny setRedirect={setRedirect}/>} />
         <Route path="help" element={<Help />} />
         <Route path="redirect" element={<Redirect redirect={redirect} setRedirect={setRedirect} />} />
@@ -82,14 +255,25 @@ export default function App() {
         <Route path="familysignup" element={<FamilySignUp uid={uid} setUID={setUID}/>} />
         <Route path="nannysignup"  element={<NannySignUp uid={uid} setUID={setUID}/>} />
 
-        <Route path="users/:url_uid" element={<Users uid={uid} redirect={redirect} setRedirect={setRedirect}/>}/>
+        <Route
+          path="users/:url_uid"
+          element={
+            <Users
+              uid={uid}
+              redirect={redirect}
+              setRedirect={setRedirect}
+              lookingFor_state={lookingFor_state}
+              lookingFor_dispatch={lookingFor_dispatch} 
+            />
+          }
+        />
         <Route path="users/:url_uid/reviews" element={<Reviews uid={uid}/>}/>
 
         <Route path="family" element={<PrivateFamily uid={uid}/>}>
           <Route index element = {<FamilyProfile uid={uid} />} />
-          <Route path="agreements" element={<FamilyAgreements />} />
-          <Route path="rendezvous" element={<FamilyRendezvous />} />
-          <Route path="requests"   element={<FamilyRequests />} />
+          <Route path="agreements" element={<FamilyAgreements uid={uid} />} />
+          <Route path="rendezvous" element={<FamilyRendezvous uid={uid} />} />
+          <Route path="requests"   element={<FamilyRequests uid={uid} />} />
         </Route>
 
         <Route path="nanny" element={<PrivateNanny uid={uid} />}>
@@ -98,7 +282,7 @@ export default function App() {
           <Route path="newoffer"   element={<NannyNewOffer uid={uid} />} />
           <Route path="offers"     element={<NannyOffers uid={uid} />} />
           <Route path="rendezvous" element={<NannyRendezvous uid={uid}/>} />
-          <Route path="requests"   element={<NannyRequests />} />
+          <Route path="requests"   element={<NannyRequests uid={uid}/>} />
         </Route>
 
         <Route path="internal">
