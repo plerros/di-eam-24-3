@@ -43,8 +43,9 @@ function RendezvousDialog({ onClose, open, offer, uidFamily }) {
         offerID: offer.id,
         scheduled: value.toISOString()
       })
+      onClose();
     }
-  }, [submit, uidFamily, offer.id, value]);
+  }, [submit, uidFamily, offer.id, value, onClose]);
   const rendezvous_list = Database.getRendezvous({uidFamily:uidFamily, scheduledAfter:true, offerID:offer.id})
   const rendezvous = (rendezvous_list.length > 0) ? rendezvous_list[0] : null;
 
