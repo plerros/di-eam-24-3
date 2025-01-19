@@ -6,7 +6,7 @@ import Divider from '@mui/material/Divider';
 import NannyBox from "../components/NannyBox";
 
 import * as Database from "../components/Database.js"
-import LookingForConrtols from '../components/LookingForControls.js';
+import LookingForControls from '../components/LookingForControls.js';
 
 export default function Search({lookingFor_state, lookingFor_dispatch}) {
 
@@ -53,7 +53,7 @@ export default function Search({lookingFor_state, lookingFor_dispatch}) {
           gap: 5
         }}
       >
-        <LookingForConrtols
+        <LookingForControls
           lookingFor_state={lookingFor_state}
           lookingFor_dispatch={lookingFor_dispatch}
         />

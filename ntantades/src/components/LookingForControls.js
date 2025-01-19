@@ -3,7 +3,44 @@ import TimeRangeSlider from "./TimeRangeSlider"
 
 import municipalities from '../municipalities.json'
 
-export default function LookingForConrtols({lookingFor_state, lookingFor_dispatch}) {
+export default function LookingForControls({lookingFor_state, lookingFor_dispatch, municipality, hours}) {
+  const municipalityField = (municipality) ? (
+    municipality
+  ) : (
+    <Autocomplete
+      required={true}
+      value={lookingFor_state.municipality}
+      onChange={(event, newValue) => {
+        lookingFor_dispatch({
+          type: 'changed_municipality',
+          nextMunicipality: newValue
+        })
+      }}
+      issue={{error:false, help:""}}
+      disablePortal
+      options={municipalities}
+      renderInput={(params) => <TextField {...params} label="Δήμος" />}
+    />
+  );
+  const hoursField = (hours) ? (
+    <Box>
+      {hours[0]}
+      -
+      {hours[1]}
+    </Box>
+  ) : (
+    <TimeRangeSlider
+      value={lookingFor_state.hours}
+      setValue={(newValue) => {
+        lookingFor_dispatch({
+          type: 'changed_hours',
+          nextHours: newValue
+        })
+      }}
+      fulltime = {lookingFor_state.fullTime}
+    />
+  );
+
   return (
     <Box
       sx={{
@@ -13,20 +50,7 @@ export default function LookingForConrtols({lookingFor_state, lookingFor_dispatc
         p: 1
       }}
     >
-      <Autocomplete
-        required={true}
-        value={lookingFor_state.municipality}
-        onChange={(event, newValue) => {
-          lookingFor_dispatch({
-            type: 'changed_municipality',
-            nextMunicipality: newValue
-          })
-        }}
-        issue={{error:false, help:""}}
-        disablePortal
-        options={municipalities}
-        renderInput={(params) => <TextField {...params} label="Δήμος" />}
-      />
+      {municipalityField}
       <Divider orientation="horizontal" flexItem />
       <Box>
         Απασχόληση:
@@ -56,16 +80,7 @@ export default function LookingForConrtols({lookingFor_state, lookingFor_dispatc
       <Divider orientation="horizontal" flexItem />
       <Box>
         Ώρες Εργασίας:
-        <TimeRangeSlider
-          value={lookingFor_state.hours}
-          setValue={(newValue) => {
-            lookingFor_dispatch({
-              type: 'changed_hours',
-              nextHours: newValue
-            })
-          }}
-          fulltime = {lookingFor_state.fullTime}
-        />
+        {hoursField}
       </Box>
       <Divider orientation="horizontal" flexItem />
       <Box>

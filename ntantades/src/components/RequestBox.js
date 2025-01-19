@@ -31,7 +31,7 @@ export default function RequestBox({id, uid, title}) {
 
 
   React.useEffect(() => {
-    if (offer !== null && request != null)
+    if (accept && offer !== null && request != null)
       Database.setOffer({id:offer.id, requestID:request.id})
   }, [accept, offer, request]);
 

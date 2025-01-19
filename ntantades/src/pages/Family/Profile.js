@@ -8,6 +8,7 @@ import Calendar from "../../components/Calendar";
 import RendezvousBox from "../../components/RendezvousBox";
 
 import * as Database from "../../components/Database"
+import RequestBox from "../../components/RequestBox";
 
 function rendezvousOverview (uid)
 {
@@ -22,6 +23,22 @@ function rendezvousOverview (uid)
 
   return (
     <RendezvousBox id={rendezvous[0].id} uid={uid} title={"Επόμενο"}/>
+  );
+}
+
+function requestOverview (uid)
+{
+  var requests = Database.getRequests({uidFamily:uid});
+  if (requests === null)
+    requests = [];
+
+  if (requests.length === 0)
+    return("Δεν υπάρχουν αιτήσεις συνεργασίας");
+
+  requests.reverse()
+
+  return (
+    <RequestBox id={requests[0].id} uid={uid} title={"Πιο πρόσφατη"}/>    
   );
 }
 
@@ -52,7 +69,7 @@ export default function Profile({uid}) {
         </Box>
       </GrayBox>
       <GrayBox title="Αιτήσεις Συνεργασίας" actions={<Button variant="contained" component={Link} to={"/family/requests"}> <ArrowForwardIcon/></Button>}>
-
+        {requestOverview(uid)}
       </GrayBox>
       <GrayBox title="Συμφωνητικά" actions={<Button variant="contained" component={Link} to={"/family/agreements"}> <ArrowForwardIcon/></Button>}>
 

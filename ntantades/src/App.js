@@ -271,9 +271,9 @@ export default function App() {
 
         <Route path="family" element={<PrivateFamily uid={uid}/>}>
           <Route index element = {<FamilyProfile uid={uid} />} />
-          <Route path="agreements" element={<FamilyAgreements />} />
-          <Route path="rendezvous" element={<FamilyRendezvous />} />
-          <Route path="requests"   element={<FamilyRequests />} />
+          <Route path="agreements" element={<FamilyAgreements uid={uid} />} />
+          <Route path="rendezvous" element={<FamilyRendezvous uid={uid} />} />
+          <Route path="requests"   element={<FamilyRequests uid={uid} />} />
         </Route>
 
         <Route path="nanny" element={<PrivateNanny uid={uid} />}>

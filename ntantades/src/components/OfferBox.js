@@ -128,7 +128,7 @@ function RequestDialog({ onClose, open, offer, uidFamily, lookingFor_state, look
     }
   }, [submit, uidFamily, offer.id, lookingFor_state]);
 
-  const request_list = Database.getRequests({uidFamily:uidFamily, scheduledAfter:true, offerID:offer.id})
+  const request_list = Database.getRequests({uidFamily:uidFamily, offerID:offer.id})
   const request = (request_list.length > 0) ? request_list[0] : null;
 
   if (request !== null) {
@@ -141,12 +141,16 @@ function RequestDialog({ onClose, open, offer, uidFamily, lookingFor_state, look
     )
   }
 
+  const nanny = Database.getUser(offer.uidNanny);
+
   return (
     <Dialog onClose={handleClose} open={open}>
         <DialogTitle> Αίτημα Συνεργασίας </DialogTitle>
         <LookingForControls
           lookingFor_state={lookingFor_state}
           lookingFor_dispatch={lookingFor_dispatch}
+          municipality={nanny.municipality}
+          hours={offer.availableHours}
         />
         <Button
           variant="contained"
