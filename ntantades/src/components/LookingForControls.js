@@ -3,7 +3,7 @@ import TimeRangeSlider from "./TimeRangeSlider"
 
 import municipalities from '../municipalities.json'
 
-export default function LookingForControls({lookingFor_state, lookingFor_dispatch, municipality, hours}) {
+export default function LookingForControls({lookingFor_state, lookingFor_dispatch, municipality, type, hours}) {
   const municipalityField = (municipality) ? (
     municipality
   ) : (
@@ -22,6 +22,32 @@ export default function LookingForControls({lookingFor_state, lookingFor_dispatc
       renderInput={(params) => <TextField {...params} label="Δήμος" />}
     />
   );
+  const typeField = (type) ? (
+    (type === "FullTime") ? " Πλήρης" : " Μερική"
+  ) : (
+    <FormGroup>
+      <FormControlLabel
+        control={
+          <Checkbox checked={lookingFor_state.fullTime} onChange={() => {
+            lookingFor_dispatch({
+              type: 'toggled_fullTime'
+            })
+          }}/>
+        }
+        label="Πλήρης"
+      />
+      <FormControlLabel
+        control={
+          <Checkbox checked={lookingFor_state.partTime} onChange={() => {
+            lookingFor_dispatch({
+              type: 'toggled_partTime'
+            })
+          }}/>
+        }
+        label="Μερική"
+      />
+    </FormGroup>
+  )
   const hoursField = (hours) ? (
     <Box>
       {hours[0]}
@@ -54,28 +80,7 @@ export default function LookingForControls({lookingFor_state, lookingFor_dispatc
       <Divider orientation="horizontal" flexItem />
       <Box>
         Απασχόληση:
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox checked={lookingFor_state.fullTime} onChange={() => {
-                lookingFor_dispatch({
-                  type: 'toggled_fullTime'
-                })
-              }}/>
-            }
-            label="Πλήρης"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={lookingFor_state.partTime} onChange={() => {
-                lookingFor_dispatch({
-                  type: 'toggled_partTime'
-                })
-              }}/>
-            }
-            label="Μερική"
-          />
-        </FormGroup>
+        {typeField}
       </Box>
       <Divider orientation="horizontal" flexItem />
       <Box>

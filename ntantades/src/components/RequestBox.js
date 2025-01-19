@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -98,7 +98,13 @@ export default function RequestBox({id, uid, title}) {
   ) : (
     []
   )
-  
+
+  if (accept) {
+    return (
+      <Navigate to="/nanny" />
+    );
+  }
+
   return (
     <GrayBox title={(title) ? null : "Συνεργασία"} subtitle={title} actions={nannyActions}>
       <TableContainer>

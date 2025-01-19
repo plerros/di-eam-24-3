@@ -125,8 +125,9 @@ function RequestDialog({ onClose, open, offer, uidFamily, lookingFor_state, look
         agreedDays: daysArray,
         agreedHours: lookingFor_state.hours
       })
+      onClose();
     }
-  }, [submit, uidFamily, offer.id, lookingFor_state]);
+  }, [submit, uidFamily, offer.id, lookingFor_state, onClose]);
 
   const request_list = Database.getRequests({uidFamily:uidFamily, offerID:offer.id})
   const request = (request_list.length > 0) ? request_list[0] : null;
@@ -150,6 +151,7 @@ function RequestDialog({ onClose, open, offer, uidFamily, lookingFor_state, look
           lookingFor_state={lookingFor_state}
           lookingFor_dispatch={lookingFor_dispatch}
           municipality={nanny.municipality}
+          type={offer.type}
           hours={offer.availableHours}
         />
         <Button
