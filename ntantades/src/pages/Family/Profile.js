@@ -18,7 +18,6 @@ function rendezvousOverview (uid)
   if (rendezvous.length === 0)
     return("Δεν υπάρχουν ραντεβού");
 
-  console.log(rendezvous)
   rendezvous.reverse()
 
   return (

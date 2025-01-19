@@ -8,8 +8,10 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 import GrayBox from "./GrayBox";
 import RendezvousBox from "./RendezvousBox";
+import LookingForControls from "./LookingForControls"
 
 import * as Database from "./Database";
+import RequestBox from "./RequestBox";
 
 const index2day = [
   "MON",
@@ -52,7 +54,7 @@ function RendezvousDialog({ onClose, open, offer, uidFamily }) {
         <RendezvousBox id={rendezvous.id} uid={uidFamily}/>
       </Dialog>
     )
-}
+  }
   return (
     <Dialog onClose={handleClose} open={open}>
         <DialogTitle> Προγραμματισμός Ραντεβού </DialogTitle>
@@ -88,16 +90,71 @@ function RendezvousDialog({ onClose, open, offer, uidFamily }) {
   )
 }
 
-function RequestDialog(props) {
-  const { onClose, open } = props;
+function RequestDialog({ onClose, open, offer, uidFamily, lookingFor_state, lookingFor_dispatch }) {
+  const [submit, setSubmit] = React.useState(false);
 
   const handleClose = () => {
     onClose();
   };
 
+  const handleSubmit = () => {
+    setSubmit(true);
+  }
+
+  React.useEffect(() => {
+    var daysArray = [];
+    if (lookingFor_state.monday)
+        daysArray.push("MON")
+    if (lookingFor_state.tuesday)
+      daysArray.push("TUE")
+    if (lookingFor_state.thursday)
+        daysArray.push("THU")
+    if (lookingFor_state.wednesday)
+        daysArray.push("WED")
+    if (lookingFor_state.friday)
+        daysArray.push("FRI")
+    if (lookingFor_state.saturday)
+        daysArray.push("SAT")
+    if (lookingFor_state.sunday)
+        daysArray.push("SUN")
+    if (submit) {
+      Database.setRequest({
+        id: -1,
+        uidFamily: uidFamily,
+        offerID: offer.id,
+        agreedDays: daysArray,
+        agreedHours: lookingFor_state.hours
+      })
+    }
+  }, [submit, uidFamily, offer.id, lookingFor_state]);
+
+  const request_list = Database.getRequests({uidFamily:uidFamily, scheduledAfter:true, offerID:offer.id})
+  const request = (request_list.length > 0) ? request_list[0] : null;
+
+  if (request !== null) {
+    return (
+      <Dialog onClose={handleClose} open={open}>
+        {
+        <RequestBox id={request.id} uid={uidFamily}/>
+        }
+      </Dialog>
+    )
+  }
+
   return (
     <Dialog onClose={handleClose} open={open}>
         <DialogTitle> Αίτημα Συνεργασίας </DialogTitle>
+        <LookingForControls
+          lookingFor_state={lookingFor_state}
+          lookingFor_dispatch={lookingFor_dispatch}
+        />
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          sx={{m:1}}
+        >
+          ΥΠΟΒΟΛΗ
+        </Button>
     </Dialog>
   )
 }
@@ -112,7 +169,7 @@ const day2name = {
   "SUN": "Κυριακή"
 };
 
-function Actions (offer, uid) {
+function Actions (offer, uid, lookingFor_state, lookingFor_dispatch) {
   const [openRendezvous, setOpenRendezvous] = React.useState(false);
   const [openRequest, setOpenRequest] = React.useState(false);
 
@@ -195,19 +252,27 @@ function Actions (offer, uid) {
         open={openRequest}
         onClose={handleCloseRequest}
         offer={offer}
+        uidFamily={uid}
+        lookingFor_state={lookingFor_state}
+        lookingFor_dispatch={lookingFor_dispatch}
       />
     </Box>
   );
 }
 
-export default function OfferBox({id, uid, additionalActions}) {
+export default function OfferBox({id, uid, additionalActions, lookingFor_state, lookingFor_dispatch}) {
   const offer = Database.getOffers({id:id})[0];
   const published = new Date(Date.parse(offer.published));
 
   return (
     <GrayBox
       title = "Αγγελία"
-      actions={<Box>{Actions(offer, uid)} {additionalActions}</Box>}  
+      actions={<Box>{Actions(
+        offer,
+        uid,
+        lookingFor_state,
+        lookingFor_dispatch
+      )} {additionalActions}</Box>}  
     >
       <TableContainer>
         <Table>

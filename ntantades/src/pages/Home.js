@@ -9,10 +9,10 @@ import * as Database from "../components/Database"
 import municipalities from '../municipalities.json'
 import backgroundImg from '../image/loving-mother-holding-baby-6725451.jpg'
 
-export default function Home({municipality, setMunicipality}) {
+export default function Home({lookingFor_state, lookingFor_dispatch}) {
   const nannies = Database.getUsers({role:"Nanny"})
 
-  if (municipality !== null) {
+  if (lookingFor_state.municipality !== null) {
     return (
       <Navigate to="/search" />
     );
@@ -49,12 +49,12 @@ export default function Home({municipality, setMunicipality}) {
             justifyContent="center"
             height={"70vh"}
             sx={{
-              display:"flex",
+              display:"flex"
             }}
           >
-            <Box flexGrow="1">
+            <Box flexGrow="1" sx={{backgroundColor:"#000000"}}>
               <GrayBox
-                title={<Box sx={{whiteSpace:"pre"}}>Διακοπές  /  Έξοδος  /  Δουλειά ?</Box>}
+                title={<Box sx={{display: "flex"}}>Διακοπές / Eξοδος / Δουλειά ?</Box>}
                 subtitle={"Βρές τώρα ποιός θα φροντίζει το βρέφος ή νήπιο σου όσο λείπεις"}
                 actions={
                   <Tooltip
@@ -73,10 +73,12 @@ export default function Home({municipality, setMunicipality}) {
                 <Box sx= {{ display:'flex', flexDirection: 'column', gap: 2 }}>
                   <Autocomplete
                     required={true}
-                    value={municipality}
-                    setValue={setMunicipality}
+                    value={lookingFor_state.municipality}
                     onChange={(event, newValue) => {
-                      setMunicipality(newValue)
+                      lookingFor_dispatch({
+                        type: 'changed_municipality',
+                        nextMunicipality: newValue
+                      })
                     }}
                     issue={{error:false, help:""}}
                     disablePortal
