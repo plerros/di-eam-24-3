@@ -540,7 +540,7 @@ export default function SignUp({uid, setUID}) {
             <StepLabel>{"Προσωπικά στοιχεία"}</StepLabel>
         </Step>
         <Step key={2}>
-            <StepLabel>{"Επαγγελματική εμπειρία"}</StepLabel>
+            <StepLabel>{"Στοιχεία βρέφους"}</StepLabel>
         </Step>
         <Step key={3}>
             <StepLabel>{"Ολοκλήρωση λογαριασμού"}</StepLabel>

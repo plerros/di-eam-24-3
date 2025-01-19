@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Navigate } from 'react-router-dom';
-import { Autocomplete, Box, Container, TextField } from "@mui/material";
+import { Autocomplete, Box, Container, TextField, Tooltip } from "@mui/material";
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import GrayBox from "../components/GrayBox";
 import NannyBox from "../components/NannyBox";
 
@@ -29,9 +30,6 @@ export default function Home({municipality, setMunicipality}) {
         height: "100vh"
       }}
     >
-      {
-        //<img src={require('../image/loving-mother-holding-baby-6725451.jpg')} alt=""/>
-      }
       <Container
         maxWidth="xl"
         sx = {{
@@ -55,7 +53,23 @@ export default function Home({municipality, setMunicipality}) {
             }}
           >
             <Box flexGrow="1">
-              <GrayBox title={"Αναζήτηση"}>
+              <GrayBox
+                title={<Box sx={{whiteSpace:"pre"}}>Διακοπές  /  Έξοδος  /  Δουλειά ?</Box>}
+                subtitle={"Βρές τώρα ποιός θα φροντίζει το βρέφος ή νήπιο σου όσο λείπεις"}
+                actions={
+                  <Tooltip
+                    title={<h1>Για βρέφη και νήπια απο 2 μηνών εώς 3 ετών</h1>}
+                    alignItems="center"
+                    justifyContent="center"
+                    sx={{
+                      display:"flex",
+                      m:2
+                    }}
+                  >
+                    <HelpOutlineIcon />
+                  </Tooltip>
+                }
+              >
                 <Box sx= {{ display:'flex', flexDirection: 'column', gap: 2 }}>
                   <Autocomplete
                     required={true}
