@@ -227,7 +227,7 @@ function Actions (offer, uid, lookingFor_state, lookingFor_dispatch) {
           ΣΥΝΕΡΓΑΣΙΑ
         </Button>
         <Tooltip
-          title={<h2>Οι γονείς εκκινούν τη διαδικασία μέσα απο ένα πρώτο ραντεβού ή απευθείας ενα αίτημα συνεργασίας</h2>}
+          title={<h2>Οι γονείς εκκινούν τη διαδικασία μέσα απο ενα πρώτο ραντεβού ή απευθείας μέσα απο ενα αίτημα συνεργασίας</h2>}
           alignItems="center"
           justifyContent="center"
           sx={{
@@ -286,7 +286,7 @@ function Actions (offer, uid, lookingFor_state, lookingFor_dispatch) {
         lookingFor_dispatch={lookingFor_dispatch}
       />
       <Tooltip
-          title={<h2>Οι γονείς εκκινούν τη διαδικασία μέσα απο ένα πρώτο ραντεβού ή απευθείας ενα αίτημα συνεργασίας</h2>}
+          title={<h2>Οι γονείς εκκινούν τη διαδικασία μέσα απο ενα πρώτο ραντεβού ή απευθείας μέσα απο ενα αίτημα συνεργασίας</h2>}
           alignItems="center"
           justifyContent="center"
           sx={{
