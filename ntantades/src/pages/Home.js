@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Navigate } from 'react-router-dom';
 import { Autocomplete, Box, Container, TextField, Tooltip } from "@mui/material";
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import InfoIcon from '@mui/icons-material/Info';
 import GrayBox from "../components/GrayBox";
 import NannyBox from "../components/NannyBox";
 
@@ -84,7 +84,7 @@ export default function Home({lookingFor_state, lookingFor_dispatch}) {
                       m:2
                     }}
                   >
-                    <HelpOutlineIcon />
+                    <InfoIcon />
                   </Tooltip>
                 }
               >

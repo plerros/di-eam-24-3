@@ -144,7 +144,7 @@ export default function RequestBox({id, uid, title, subtitle}) {
                 Συνεργασία:
               </TableCell>
               <TableCell align="left">
-                {(offer.requestID === 0) ? "-" : "Η νταντά αποδέχθηκε"}
+                {(offer.requestID === 0) ? "Εκκρεμεί" : "Η νταντά αποδέχθηκε"}
               </TableCell>
             </TableRow>
           </TableBody>

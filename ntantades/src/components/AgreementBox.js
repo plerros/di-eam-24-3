@@ -95,7 +95,7 @@ export default function AgreementBox({id, uid, title, subtitle}) {
                   Συμφωνητικό:
                 </TableCell>
                 <TableCell align="left">
-                  {(agreement.accepted) ? "Η νταντά αποδέχθηκε" : "-"}
+                  {(agreement.accepted) ? "Η νταντά αποδέχθηκε" : "Εκκρεμεί"}
                 </TableCell>
               </TableRow>
             </TableBody>

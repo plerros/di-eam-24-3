@@ -1,10 +1,11 @@
 import * as React from "react"
 import dayjs from "dayjs"
-import { Box, Button, Dialog, DialogTitle, Stack, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { Box, Button, Dialog, DialogTitle, Stack, Table, TableBody, TableCell, TableContainer, TableRow, Tooltip } from "@mui/material";
 import { Link } from 'react-router-dom'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import InfoIcon from '@mui/icons-material/Info';
 
 import GrayBox from "./GrayBox";
 import RendezvousBox from "./RendezvousBox";
@@ -204,7 +205,11 @@ function Actions (offer, uid, lookingFor_state, lookingFor_dispatch) {
 
   if (uid === 0) {
     return (
-      <Box>
+      <Box
+        sx={{
+          display:"flex"
+        }}
+      >
         <Button
           variant="contained"
           component={Link}
@@ -221,6 +226,17 @@ function Actions (offer, uid, lookingFor_state, lookingFor_dispatch) {
         >
           ΣΥΝΕΡΓΑΣΙΑ
         </Button>
+        <Tooltip
+          title={<h2>Οι γονείς εκκινούν τη διαδικασία μέσα απο ένα πρώτο ραντεβού ή απευθείας ενα αίτημα συνεργασίας</h2>}
+          alignItems="center"
+          justifyContent="center"
+          sx={{
+            display:"flex",
+            m:2
+          }}
+        >
+          <InfoIcon />
+        </Tooltip>
       </Box>
     );
   }
@@ -269,6 +285,17 @@ function Actions (offer, uid, lookingFor_state, lookingFor_dispatch) {
         lookingFor_state={lookingFor_state}
         lookingFor_dispatch={lookingFor_dispatch}
       />
+      <Tooltip
+          title={<h2>Οι γονείς εκκινούν τη διαδικασία μέσα απο ένα πρώτο ραντεβού ή απευθείας ενα αίτημα συνεργασίας</h2>}
+          alignItems="center"
+          justifyContent="center"
+          sx={{
+            display:"flex",
+            m:2
+          }}
+        >
+        <InfoIcon />
+      </Tooltip>
     </Box>
   );
 }

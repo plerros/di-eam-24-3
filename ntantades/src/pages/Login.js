@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Navigate } from "react-router-dom";
 import Box from '@mui/material/Box';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 import InputText from '../components/InputText';
 import InputPassword from '../components/InputPassword';
@@ -88,7 +88,9 @@ export default function Login({uid, handleUID}) {
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          flexDirection:'column',
+          gap: 3
         }}
         noValidate
         autoComplete="off"
@@ -98,6 +100,11 @@ export default function Login({uid, handleUID}) {
           onClick={handleSubmit}
         >
           ΕΙΣΟΔΟΣ
+        </Button>
+        <Button>
+          <Typography textTransform={'none'}>
+            Ξέχασα τον κωδικό
+          </Typography>
         </Button>
       </Box>
     </Box>
