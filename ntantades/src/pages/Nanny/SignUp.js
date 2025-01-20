@@ -4,13 +4,14 @@ import InputText from '../../components/InputText';
 import InputPassword from '../../components/InputPassword';
 import InputSelect from '../../components/InputSelect.js';
 import InputFile from '../../components/InputFile.js'
-import { Button, Checkbox, FormControl, FormControlLabel, FormHelperText, Step, StepLabel, Stepper } from '@mui/material';
+import { Autocomplete, Button, Checkbox, FormControl, FormControlLabel, FormHelperText, Step, StepLabel, Stepper, TextField } from '@mui/material';
 
 import municipalities from '../../municipalities.json'
 import { Navigate } from 'react-router-dom';
 
 import * as Database from "../../components/Database.js"
 import InputParagraph from '../../components/InputParagraph.js';
+import InputAutocomplete from '../../components/InputAutocomplete.js';
 
 const issueNone = {error:false, help:""};
 const issueRequired = {error:true, help:"Υποχρεωτικό"};
@@ -133,10 +134,12 @@ function reducer(state, action) {
       }
     }
     case 'changed_municipality': {
-      localStorage.setItem('signupMunicipality', action.nextMunicipality);
+      const value = (action.nextMunicipality === null) ? "" : action.nextMunicipality;
+
+      localStorage.setItem('signupMunicipality', value);
       return {
         ...state,
-        municipality: action.nextMunicipality,
+        municipality: value,
         municipalityIssue: issueNone
       }
     }
@@ -196,7 +199,7 @@ function reducer(state, action) {
             || (state.age === "")
             || (state.gender === "")
             || (state.phone === "")
-            || (state.municipality === "")
+            || (state.municipality === "" || state.municipality === null)
             || (state.homeAddress === "")
             || (state.postalCode === "")
           ) {
@@ -389,7 +392,7 @@ function formInputs(state, dispatch) {
           setValue={handlePhone}
           issue={state.phoneIssue}
         />
-        <InputSelect
+        <InputAutocomplete
           label={"Δήμος"}
           required={true}
           value={state.municipality}
