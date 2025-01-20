@@ -5,8 +5,8 @@ import GrayBox from "./GrayBox";
 import * as Database from "./Database"
 import { Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 
-export default function RendezvousBox({id, uid, title}) {
-  const rendezvous_list = Database.getRendezvous({id:id, scheduledAfter:true});
+export default function RendezvousBox({id, uid, title, subtitle}) {
+  const rendezvous_list = Database.getRendezvous({id:id});
   if (rendezvous_list.length === 0)
     return ([]);
 
@@ -57,7 +57,7 @@ export default function RendezvousBox({id, uid, title}) {
   )
   
   return (
-    <GrayBox title={(title) ? null : "Ραντεβου"} subtitle={title}>
+    <GrayBox title={(title === undefined) ? "Ραντεβου" : title} subtitle={subtitle}>
       <TableContainer>
         <Table>
           <TableBody>

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
 import { Autocomplete } from '@mui/material';
 
 const errorNone = {error:false, help:""};
@@ -52,26 +51,5 @@ export default function InputAutocomplete({label, required, value, setValue, iss
         />
       }
     />
-  );
-  return (
-    <TextField
-      error={localIssue.error}
-      helperText={localIssue.help}
-      required={required}
-      id="outlined-basic"
-      select
-      label={label}
-      variant="outlined"
-      value={value}
-      onChange={(event) => {
-        setValue(event.target.value)
-      }}
-    >
-      {options.map((option) => (
-        <MenuItem key={option} value={option}>
-          {option}
-        </MenuItem>
-      ))}
-    </TextField>
   );
 }

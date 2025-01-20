@@ -9,36 +9,49 @@ import RendezvousBox from "../../components/RendezvousBox";
 
 import * as Database from "../../components/Database"
 import RequestBox from "../../components/RequestBox";
+import AgreementBox from "../../components/AgreementBox";
 
 function rendezvousOverview (uid)
 {
-  var rendezvous = Database.getRendezvous({uidFamily:uid, scheduledAfter:true});
-  if (rendezvous === null)
-    rendezvous = [];
+  const offers = Database.getOffers({requestID:0, active:true});
+  const offerIDs = offers.map((item) => (item.id))
+  const rendezvous = Database.getRendezvous({uidFamily:uid, listOfferID:offerIDs, scheduledAfter:true}).reverse();
 
   if (rendezvous.length === 0)
-    return("Δεν υπάρχουν ραντεβού");
-
-  rendezvous.reverse()
+    return("Δεν υπάρχουν ραντεβού για ενεργείς αγγελίες");
 
   return (
-    <RendezvousBox id={rendezvous[0].id} uid={uid} title={"Επόμενο"}/>
+    <RendezvousBox id={rendezvous[0].id} uid={uid} title={null} subtitle={"Επόμενο"}/>
   );
 }
 
 function requestOverview (uid)
 {
-  var requests = Database.getRequests({uidFamily:uid});
-  if (requests === null)
-    requests = [];
+  const offers = Database.getOffers({requestID:0, active:true});
+  const offerIDs = offers.map((item) => (item.id))
+  const requests = Database.getRequests({uidFamily:uid, listOfferID:offerIDs}).reverse();
 
   if (requests.length === 0)
-    return("Δεν υπάρχουν αιτήσεις συνεργασίας");
-
-  requests.reverse()
+    return("Δεν υπάρχουν αιτήσεις συνεργασίας για ενεργείς αγγελίες");
 
   return (
-    <RequestBox id={requests[0].id} uid={uid} title={"Πιο πρόσφατη"}/>    
+    <RequestBox id={requests[0].id} uid={uid} title={null} subtitle={"Πιο πρόσφατη"}/>    
+  );
+}
+
+function agreementsOverview (uid)
+{
+  const offers = Database.getOffers({notRequestID:0, active:true});
+  const offerIDs = offers.map((item) => (item.id))
+  const requests = Database.getRequests({uidFamily:uid, listOfferID:offerIDs});
+  const requestIDs = requests.map((item) => (item.id));
+  const agreements = (Database.getAgreements({listRequestIDs:requestIDs})).reverse();
+
+  if (agreements.length === 0)
+    return("Δεν υπάρχουν συμφωνητικά για ενεργείς αγγελίες");
+
+  return (
+    <AgreementBox id={agreements[0].id} uid={uid} title={null} subtitle={"Πιο πρόσφατη"}/>    
   );
 }
 
@@ -72,7 +85,7 @@ export default function Profile({uid}) {
         {requestOverview(uid)}
       </GrayBox>
       <GrayBox title="Συμφωνητικά" actions={<Button variant="contained" component={Link} to={"/family/agreements"}> <ArrowForwardIcon/></Button>}>
-
+          {agreementsOverview(uid)}
       </GrayBox>
     </Container>
   );

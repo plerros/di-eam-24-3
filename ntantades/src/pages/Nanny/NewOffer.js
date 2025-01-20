@@ -331,7 +331,8 @@ export default function NewOffer({uid}) {
         availableHours: state.availableHours,
         rendezvousDays: state.rendezvousDays,
         rendezvousHours: state.rendezvousHours,
-        requestID: 0
+        requestID: 0,
+        active: true
       })
     }
   }, [state, uid]);

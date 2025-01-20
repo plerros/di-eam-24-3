@@ -10,7 +10,7 @@ import * as Database from "../components/Database"
 export default function Users({uid, redirect, setRedirect, lookingFor_state, lookingFor_dispatch}) {
   const { url_uid } = useParams();
 
-  var offers = Database.getOffers({uidNanny:url_uid*1, requestID:0});
+  var offers = Database.getOffers({uidNanny:url_uid*1, requestID:0, active:true});
   if (offers === null)
     offers = []
 

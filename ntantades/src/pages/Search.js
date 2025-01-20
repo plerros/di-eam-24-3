@@ -30,7 +30,8 @@ export default function Search({lookingFor_state, lookingFor_dispatch}) {
     notId: 0,
     availableDays: daysArray,
     availableHours: lookingFor_state.hours,
-    requestID: 0
+    requestID: 0,
+    active: true
   });
 
   const nanniesWithOffer = filteredOffers.map((item) => (item.uidNanny));

@@ -138,37 +138,6 @@ function RequestDialog({ onClose, open, offer, uidFamily, lookingFor_state, look
     }
     setSubmit(true);
   }
-/*
-  React.useEffect(() => {
-    var daysArray = [];
-    if (lookingFor_state.monday)
-        daysArray.push("MON")
-    if (lookingFor_state.tuesday)
-      daysArray.push("TUE")
-    if (lookingFor_state.thursday)
-        daysArray.push("THU")
-    if (lookingFor_state.wednesday)
-        daysArray.push("WED")
-    if (lookingFor_state.friday)
-        daysArray.push("FRI")
-    if (lookingFor_state.saturday)
-        daysArray.push("SAT")
-    if (lookingFor_state.sunday)
-        daysArray.push("SUN")
-    if (submit) {
-      Database.setRequest({
-        id: -1,
-        uidFamily: uidFamily,
-        offerID: offer.id,
-        agreedDays: daysArray,
-        agreedHours: lookingFor_state.hours
-      })
-      onClose();
-    }
-  }, [submit, uidFamily, offer.id, lookingFor_state, onClose]);
-  const request_list = Database.getRequests({uidFamily:uidFamily, offerID:offer.id})
-  const request = (request_list.length > 0) ? request_list[0] : null;
-*/
 
   if (request !== null) {
     return (
@@ -351,6 +320,14 @@ export default function OfferBox({id, uid, additionalActions, lookingFor_state, 
               </TableCell>
               <TableCell align="left">
                 {published.toLocaleString()}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="right" sx = {{ width: 1/4 }}>
+                Κατάσταση:
+              </TableCell>
+              <TableCell align="left">
+                {offer.active ? "Ενεργή" : "Έληξε"}
               </TableCell>
             </TableRow>
           </TableBody>
