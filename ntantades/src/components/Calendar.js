@@ -30,7 +30,7 @@ export default function Calendar({uid}) {
 
   const user = Database.getUser(uid);
   if (user.role === "Nanny") {
-    const activeOffers = Database.getOffers({uidNanny:uid, requestID:0});
+    const activeOffers = Database.getOffers({uidNanny:uid, requestID:0, active:true});
     if (activeOffers.length > 0)
       rendezvous_list = Database.getRendezvous({offerID:activeOffers[0].id});
   }

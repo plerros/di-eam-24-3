@@ -4,7 +4,7 @@ import InputText from '../../components/InputText';
 import InputPassword from '../../components/InputPassword';
 import InputSelect from '../../components/InputSelect.js';
 import InputFile from '../../components/InputFile.js'
-import { Autocomplete, Button, Checkbox, FormControl, FormControlLabel, FormHelperText, Step, StepLabel, Stepper, TextField } from '@mui/material';
+import { Button, Checkbox, FormControl, FormControlLabel, FormHelperText, Step, StepLabel, Stepper } from '@mui/material';
 
 import municipalities from '../../municipalities.json'
 import { Navigate } from 'react-router-dom';

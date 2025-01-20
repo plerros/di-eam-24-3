@@ -13,7 +13,8 @@
       "municipality" : "",
       "postalCode"   : "",
       "role"         : "",
-      "picture"       : ""
+      "picture"      : "",
+      "description"  : ""
     },
     {
       "userID"       : 1,
@@ -87,7 +88,8 @@
       "availableHours" : [],
       "rendezvousDays"  : [],
       "rendezvousHours" : [],
-      "requestID"      : 0
+      "requestID"      : 0,
+      "active"         : false
     },
     {
       "id"             : 1,
@@ -98,7 +100,8 @@
       "availableHours" : [9, 17],
       "rendezvousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
       "rendezvousHours" : [9, 17],
-      "requestID"      : 1
+      "requestID"      : 1,
+      "active"         : false
     },
     {
       "id"             : 2,
@@ -109,7 +112,8 @@
       "availableHours" : [9, 17],
       "rendezvousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
       "rendezvousHours" : [9, 17],
-      "requestID"      : 2
+      "requestID"      : 2,
+      "active"         : false
     },
     {
       "id"             : 3,
@@ -120,7 +124,8 @@
       "availableHours" : [9, 17],
       "rendezvousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
       "rendezvousHours" : [9, 17],
-      "requestID"      : 0
+      "requestID"      : 0,
+      "active"         : true
     },
     {
       "id"             : 4,
@@ -131,10 +136,17 @@
       "availableHours" : [9, 17],
       "rendezvousDays"  : ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
       "rendezvousHours" : [9, 17],
-      "requestID"      : 0
+      "requestID"      : 0,
+      "active"         : true
     }
   ],
   "rendezvous" : [
+    {
+      "id"        : 0,
+      "uidFamily" : 0,
+      "offerID"   : 0,
+      "scheduled" : "1970-01-01T00:00:00.000Z"
+    },
     {
       "id"        : 1,
       "uidFamily" : 2,
@@ -172,6 +184,13 @@
     }
   ],
   "agreements" : [
+    {
+      "id"        : 0,
+      "requestID" : 0,
+      "begin"     : "1970-01-01T00:00:00.000Z",
+      "end"       : "1970-01-01T00:00:00.000Z",
+      "accepted"  : false
+    },
     {
       "id"        : 1,
       "requestID" : 1,

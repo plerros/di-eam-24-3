@@ -1,17 +1,55 @@
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 import RendezvousBox from "../../components/RendezvousBox";
 import * as Database from "../../components/Database"
 
-export default function Rendezvous({uid}) {
-  var offers = Database.getOffers({uidNanny:uid*1, requestID:0});
+function offerRendezvous ({uid, active}) {
+  var offers = []
+  if (active === true)
+    offers = Database.getOffers({uidNanny:uid*1, requestID:0, active:active});
+  if (active === false)
+    offers = Database.getOffers({uidNanny:uid*1, notRequestID:0});
 
-  
-  var rendezvous = Database.getRendezvous({offerID:offers[0].id});
+  if (offers.length === 0) {
+    return (
+      <Box
+        sx = {{
+          display:'flex',
+          justifyContent: 'center'
+        }}
+      >
+        {(active) ? "Δεν υπάρχει ενεργή αγγελία" : "Δεν υπάρχουν αγγελίες"}      
+      </Box>
+    );
+  }
+
+  const offerIDs = offers.map((item) => (item.id));
+  var rendezvous = Database.getRendezvous({listOfferID:offerIDs});
   if (rendezvous === null)
     rendezvous = [];
 
   rendezvous.reverse();
+
+  if (rendezvous.length === 0) {
+    return (
+      <Box
+        sx = {{
+          display:'flex',
+          justifyContent: 'center'
+        }}
+      >
+        Δεν υπάρχουν ραντεβού
+      </Box>
+    );
+  }
+  return (
+    rendezvous.map((item) => (
+      <RendezvousBox key={item.id} id={item.id} uid={uid}/>
+    ))
+  );
+}
+
+export default function Rendezvous({uid}) {
   return (
     <Container
       maxWidth="xl"
@@ -21,11 +59,10 @@ export default function Rendezvous({uid}) {
         gap: 2
       }}
     >
-      {
-        rendezvous.map((item) => (
-          <RendezvousBox key={item.id} id={item.id} uid={uid}/>
-        ))
-      }
+      <h1>Για ενεργή αγγελία:</h1>
+      {offerRendezvous({uid:uid, active:true})}
+      <h1>Ιστορικό:</h1>
+      {offerRendezvous({uid:uid, active:false})}
     </Container>
   );
 }

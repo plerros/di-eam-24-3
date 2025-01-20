@@ -17,7 +17,7 @@ const day2name = {
   "SUN": "Κυριακή"
 };
 
-export default function RequestBox({id, uid, title}) {
+export default function RequestBox({id, uid, title, subtitle}) {
   const [accept, setAccept] = React.useState(false);
   const handleAccept = () => {
     setAccept(true);
@@ -109,7 +109,7 @@ export default function RequestBox({id, uid, title}) {
   }
 
   return (
-    <GrayBox title={(title) ? null : "Συνεργασία"} subtitle={title} actions={nannyActions}>
+    <GrayBox title={(title === undefined) ? "Συνεργασία" : title} subtitle={subtitle} actions={nannyActions}>
       <TableContainer>
         <Table>
           <TableBody>
@@ -141,7 +141,7 @@ export default function RequestBox({id, uid, title}) {
             </TableRow>
             <TableRow>
               <TableCell align="right" sx = {{ width: 1/4 }}>
-                Κατάσταση:
+                Συνεργασία:
               </TableCell>
               <TableCell align="left">
                 {(offer.requestID === 0) ? "-" : "Η νταντά αποδέχθηκε"}

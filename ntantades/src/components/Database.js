@@ -201,6 +201,12 @@ export function getOffers (props) {
     && (props.notRequestID === undefined || (
       item.requestID !== props.notRequestID
     ))
+    && (props.listRequestID === undefined || (
+      props.listRequestID.includes(item.requestID)
+    ))
+    && (props.active === undefined || (
+      item.active === props.active
+    ))
   ))
 }
 
@@ -244,6 +250,9 @@ export function getRendezvous (props) {
       ))
       && (props.offerID === undefined || (
         item.offerID === props.offerID
+      ))
+      && (props.listOfferID === undefined || (
+        props.listOfferID.includes(item.offerID)
       ))
       && (props.scheduled === undefined || (
         item.scheduled === props.scheduled
@@ -296,6 +305,9 @@ export function getRequests (props) {
       ))
       && (props.offerID === undefined || (
           item.offerID === props.offerID
+      ))
+      && (props.listOfferID === undefined || (
+        props.listOfferID.includes(item.offerID)
       ))
       && (props.agreedDays === undefined || (
         item.agreedDays.isSubsetOf(props.agreedDays)
