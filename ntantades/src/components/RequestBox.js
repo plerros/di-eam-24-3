@@ -29,7 +29,6 @@ export default function RequestBox({id, uid, title}) {
   const offer   = (request_list.length === 0) ? null : Database.getOffers({id:request.offerID})[0];
   const nanny   = (request_list.length === 0) ? null : Database.getUser(offer.uidNanny);
 
-
   React.useEffect(() => {
     if (accept && offer !== null && request != null)
       Database.setOffer({id:offer.id, requestID:request.id})
@@ -40,7 +39,9 @@ export default function RequestBox({id, uid, title}) {
   if (family.userID !== uid && nanny.userID !== uid)
     return ([]);
 
-  const familyRow = (Database.getUser(uid).role === "Family") ?
+  const user = Database.getUser(uid);
+
+  const familyRow = (user.role === "Family") ?
   (
     []
   ) : (
@@ -59,7 +60,7 @@ export default function RequestBox({id, uid, title}) {
     </TableRow>
   )
 
-  const nannyRow = (Database.getUser(uid).role === "Nanny") ?
+  const nannyRow = (user.role === "Nanny") ?
   (
     []
   ) : (
@@ -78,8 +79,10 @@ export default function RequestBox({id, uid, title}) {
     </TableRow>
   )
 
-  const nannyActions = (Database.getUser(uid).role === "Nanny") ?
-  ( 
+  const nannyActions = (
+    user.role === "Nanny"
+    && offer.requestID === 0
+  ) ? ( 
     <Box
     >
       <Button
@@ -134,6 +137,14 @@ export default function RequestBox({id, uid, title}) {
                 {request.agreedHours[0]}
                 -
                 {request.agreedHours[1]}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="right" sx = {{ width: 1/4 }}>
+                Κατάσταση:
+              </TableCell>
+              <TableCell align="left">
+                {(offer.requestID === 0) ? "-" : "Η νταντά αποδέχθηκε"}
               </TableCell>
             </TableRow>
           </TableBody>
