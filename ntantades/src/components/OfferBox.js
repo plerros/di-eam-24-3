@@ -23,32 +23,35 @@ const index2day = [
   "SUN"
 ];
 
+function getRendezvous (uidFamily, offer) {
+  const rendezvous_list = Database.getRendezvous({uidFamily:uidFamily, scheduledAfter:true, offerID:offer.id})
+  if (rendezvous_list.length > 0)
+    return rendezvous_list[0];
+
+  return null;
+}
+
 function RendezvousDialog({ onClose, open, offer, uidFamily }) {
   const [value, setValue] = React.useState(null);
   const [submit, setSubmit] = React.useState(false);
+  const [rendezvous, setRendezvous] = React.useState(getRendezvous(uidFamily, offer));
 
   const handleClose = () => {
     onClose();
   };
 
   const handleSubmit = () => {
-    setSubmit(true);
-  }
-
-  React.useEffect(() => {
-    if (submit) {
+    if (submit === false) {
       Database.setRendezvous({
         id: -1,
         uidFamily: uidFamily,
         offerID: offer.id,
-        scheduled: value.toISOString()
+        scheduled: value.second(0).millisecond(0).toISOString()
       })
-      onClose();
+      setRendezvous(getRendezvous(uidFamily, offer));
     }
-  }, [submit, uidFamily, offer.id, value, onClose]);
-  const rendezvous_list = Database.getRendezvous({uidFamily:uidFamily, scheduledAfter:true, offerID:offer.id})
-  const rendezvous = (rendezvous_list.length > 0) ? rendezvous_list[0] : null;
-
+    setSubmit(true);
+  }
   if (rendezvous !== null) {
     return (
       <Dialog onClose={handleClose} open={open}>
@@ -91,17 +94,51 @@ function RendezvousDialog({ onClose, open, offer, uidFamily }) {
   )
 }
 
+function getRequest(uidFamily, offer) {
+  const request_list = Database.getRequests({uidFamily:uidFamily, offerID:offer.id})
+  if (request_list.length > 0)
+    return request_list[0];
+
+  return null;
+}
+
 function RequestDialog({ onClose, open, offer, uidFamily, lookingFor_state, lookingFor_dispatch }) {
   const [submit, setSubmit] = React.useState(false);
+  const [request, setRequest] = React.useState(getRequest(uidFamily, offer));
 
   const handleClose = () => {
     onClose();
   };
 
   const handleSubmit = () => {
+    if (submit === false) {
+      var daysArray = [];
+      if (lookingFor_state.monday)
+          daysArray.push("MON")
+      if (lookingFor_state.tuesday)
+        daysArray.push("TUE")
+      if (lookingFor_state.thursday)
+          daysArray.push("THU")
+      if (lookingFor_state.wednesday)
+          daysArray.push("WED")
+      if (lookingFor_state.friday)
+          daysArray.push("FRI")
+      if (lookingFor_state.saturday)
+          daysArray.push("SAT")
+      if (lookingFor_state.sunday)
+          daysArray.push("SUN")
+      Database.setRequest({
+        id: -1,
+        uidFamily: uidFamily,
+        offerID: offer.id,
+        agreedDays: daysArray,
+        agreedHours: lookingFor_state.hours
+      })
+      setRequest(getRequest(uidFamily, offer));
+    }
     setSubmit(true);
   }
-
+/*
   React.useEffect(() => {
     var daysArray = [];
     if (lookingFor_state.monday)
@@ -129,9 +166,9 @@ function RequestDialog({ onClose, open, offer, uidFamily, lookingFor_state, look
       onClose();
     }
   }, [submit, uidFamily, offer.id, lookingFor_state, onClose]);
-
   const request_list = Database.getRequests({uidFamily:uidFamily, offerID:offer.id})
   const request = (request_list.length > 0) ? request_list[0] : null;
+*/
 
   if (request !== null) {
     return (

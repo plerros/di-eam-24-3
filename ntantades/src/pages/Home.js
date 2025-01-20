@@ -12,6 +12,24 @@ import backgroundImg from '../image/loving-mother-holding-baby-6725451.jpg'
 export default function Home({lookingFor_state, lookingFor_dispatch}) {
   const nannies = Database.getUsers({role:"Nanny"})
 
+  const ratedNannies = nannies.map(
+    (user) => 
+    (
+      {
+        nanny:user,
+        stars:Database.getStars(user.userID)
+      }
+    )
+  )
+
+  const sortedNannies = ratedNannies.sort(
+    (a, b) => {
+      return (b.stars - a.stars);
+    }
+  )
+
+  const filteredNannies = sortedNannies.slice(0,8);
+
   if (lookingFor_state.municipality !== null) {
     return (
       <Navigate to="/search" />
@@ -98,8 +116,8 @@ export default function Home({lookingFor_state, lookingFor_dispatch}) {
             }}
           >
             <Box flexGrow="1" sx= {{ display:'flex', flexDirection: 'column', gap: 2 }}>
-              {nannies.map((user) => (
-                <NannyBox uid={user.userID} key={user.userID}/>
+              {filteredNannies.map((ratedNanny) => (
+                <NannyBox uid={ratedNanny.nanny.userID} key={ratedNanny.nanny.userID}/>
               ))}
             </Box>
           </Box>

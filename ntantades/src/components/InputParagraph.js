@@ -30,7 +30,6 @@ export default function InputParagraph({label, required, value, setValue, issue}
       error={localIssue.error}
       helperText={localIssue.help}
       required={required}
-      id="outlined-basic"
       label={label}
       variant="outlined"
       multiline

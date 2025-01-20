@@ -120,11 +120,16 @@ function reducer(state, action) {
       }
     }
     case 'changed_phone': {
-      localStorage.setItem('signupPhone', action.nextPhone);
+      if ((isNumeric(action.nextPhone) && action.nextPhone < 9999999999) || (action.nextPhone === "")) {
+        localStorage.setItem('signupPhone', action.nextPhone);
+        return {
+          ...state,
+          phone: action.nextPhone,
+          phoneIssue: issueNone
+        }
+      }
       return {
-        ...state,
-        phone: action.nextPhone,
-        phoneIssue: issueNone
+        ...state
       }
     }
     case 'changed_municipality': {
@@ -144,11 +149,16 @@ function reducer(state, action) {
       }
     }
     case 'changed_postalCode': {
-      localStorage.setItem('signupPostalCode', action.nextPostalCode);
+      if ((isNumeric(action.nextPostalCode) && action.nextPostalCode < 99999) || (action.nextPostalCode === "")) {
+        localStorage.setItem('signupPostalCode', action.nextPostalCode);
+        return {
+          ...state,
+          postalCode: action.nextPostalCode,
+          postalCodeIssue: issueNone
+        }
+      }
       return {
-        ...state,
-        postalCode: action.nextPostalCode,
-        postalCodeIssue: issueNone
+        ...state
       }
     }
     case 'changed_referenceLetter': {
@@ -226,21 +236,6 @@ function reducer(state, action) {
               agreementIssue: (state.agreement === false) ? issueRequired : issueNone
             }
           }
-
-          Database.setUser({
-            userID:       -1,
-            email:        state.email,
-            password:     state.password,
-            firstName:    state.firstName,
-            lastName:     state.lastName,
-            age:          state.age,
-            phone:        state.phone,
-            municipality: state.municipality,
-            homeAddress:  state.homeAddress,
-            postalCode:   state.postalCode,
-            description:  state.description,
-            role:         "Nanny"
-          })
 
           break;
         }
@@ -495,24 +490,32 @@ function formInputs(state, dispatch) {
 
 export default function SignUp({uid, setUID}) {
   const [state, dispatch] = React.useReducer(reducer, initialState);
+  const [submit, setSubmit] = React.useState(false);
 
   const iterateProgressPage = () => {
     dispatch({ type: 'incremented_progressPage' })
   }
 
-  React.useEffect(() => {
-    if (state.progressPage < 4)
-      return;
+  if (state.progressPage === 4 && submit === false) {
+    Database.setUser({
+      userID:       -1,
+      email:        state.email,
+      password:     state.password,
+      firstName:    state.firstName,
+      lastName:     state.lastName,
+      age:          state.age,
+      phone:        state.phone,
+      municipality: state.municipality,
+      homeAddress:  state.homeAddress,
+      postalCode:   state.postalCode,
+      description:  state.description,
+      role:         "Nanny"
+    })
+    setUID(Database.get().users.length - 1);
+    setSubmit(true);
+  }
 
-    if (uid === 0)
-      setUID(Database.get().users.length - 1);
-    // Technically wrong, but works with single user.
-
-    
-
-  }, [uid, setUID, state.progressPage]);
-
-  if (uid !== 0) {
+  if (submit) {
     return (
       <Navigate to="/redirect"/>
     );
@@ -555,7 +558,7 @@ export default function SignUp({uid, setUID}) {
       >
         <Button
           variant="contained"
-          onClick={() => iterateProgressPage()}
+          onClick={iterateProgressPage}
         >
           ΕΠΌΜΕΝΟ
         </Button>
